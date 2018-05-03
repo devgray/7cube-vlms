@@ -1,60 +1,114 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>7Cube VLMS</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<script src="js/bootstrap.min.js"></script>
-	<script src='script.js'></script>
+<!--	
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	-->
 
-</head>
+<link rel="stylesheet" href="bootstrap-cdn.min.css">
+
+<script src="jquery/jq.slim.min.js"></script>
+<script src="jquery/popper.min.js"></script>
+<script src="js-cdn.min.js"></script>
+
+
+	<!--
+	<script src="js/bootstrap.min.js"></script>
+	 
+	
+	
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	
+	
+
+	<script src="js/bootstrap.min.js"></script>
+	-->
+
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<script src='script.js'></script>
+	</head>
 
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">7Cube</a>
-    </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#">Browse <span class="sr-only">(current)</span></a></li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search" style='border-radius:2em 0em 0em 2em;width:250px;'>
-        </div>
-        <button type="submit" class="btn btn-accent-basic" style='border-radius:0em 2em 2em 0em;margin-left:-5px;margin-top:-1px;'><i class="fa fa-search" aria-hidden="true"></i></button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">@username</a></li>
-        <li><a href="#">Upload</a></li>
-        <li><a href="#">Logout</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+<?php include "nav.php"; ?>
+<div class='content'>
+<div class='container'><div class='row'><div class='col-lg-9 col-md-10 col-sm-12'>
 
-	<div class='container-fluid'>
-		<div class='row'><div class='col-sm-12'>
+	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'><!-- VIDEO HEADER -->
+		<tr><td>
+			<div class='video'>
 
-		</div></div>
+			</div></td>
+	</tr>
+	<tr>
+		<td>
+		<h2>Video Title</h2>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		1,234 views
+		</td>
+	</tr>
 
-	</div>
+	</table>
 
+	<table class='table table-borderless'> 
+			<tr>
+				<td width="60"><img class='avi-thumb'/></td>
+				<td width="70%"><button type="button" class="btn btn-light" style='text-align:left;padding-left:0px;'>@username, <span class='subtext'>@usertype</span><br>Uploaded on @date</button></td>
+				<td><button type="button" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button></td>
+				<td><button type="button" class="btn btn-outline-info">Subscribe</button></td>
+				</tr>
+	</table>
+
+	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'> <!-- VIDEO DESCRIPTION -->
+			<tr>
+				<td><blockquote class="blockquote">
+  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer class="blockquote-footer">tags, tags, tags <cite title="Source Title"><button type="button" class="btn btn-outline-info" style='border:0;'>@category</button></cite></footer>
+</blockquote></td>
+				</tr>
+	</table>
+
+
+<table class='table table-borderless'> <!-- NEW COMMENT SECTION -->
+			<tr>
+				<td width="60"><img class='avi-thumb'/></td>
+				<td width="100%"><blockquote class='blockquote comment'>@username, <span class='subtext'>@usertype</span><br>
+					<form><div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form></blockquote></td>
+				
+			</tr>
+			<tr>
+				<td></td>
+				<td align='right'><button type="button" class="btn btn-outline-info"> Post Comment</button></td>
+			</tr>
+	</table>
+
+	<table class='table table-borderless'> <!-- COMMENT SECTION -->
+			<tr>
+				<td width="60"><img class='avi-thumb'/></td>
+				<td width="90%"><blockquote class='blockquote comment'>@username, <span class='subtext'>@usertype</span><br>Finished her are its honoured drawings nor. Pretty see mutual thrown all not edward ten.
+					Particular an boisterous up he reasonably frequently.</blockquote></td>
+				<td><button type="button" class="btn btn-outline-danger btn-sml">Report Comment</button></td>
+			</tr>
+	</table>
+
+</div></div>
+</div>
+
+</div> <!-- end div content -->
 </body>
-<footer class='footer'>
-		
-</footer>
+<?php include "footer.php"; ?>
 
 </html>

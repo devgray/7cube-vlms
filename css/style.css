@@ -1,8 +1,87 @@
+@font-face {
+    font-family: 'Roboto Light';
+    src: url(fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url(fonts/Roboto-Regular.ttf);
+}
 *{
-	margin:0 auto;
-	font-family: Roboto Light;
+	//margin:0 auto;
+	//font-family: Roboto;
+	//color: #1a1a1a !important;
+}
+.subtext{
+color: #c0c0c0;
+}
+.blockquote{
+	padding-left: 60px;
 	font-size: 13px;
 }
+.comment{
+	padding-left: 10px;
+}
+.blockquote-footer{
+	font-size: 13px;
+}
+.btn-light{
+	background-color: #fff;
+	border: 0;
+}
+.btn-light:hover{
+	background-color: #fff;
+	border: 0;
+}
+.btn-outline-danger{
+	border: 0;
+	color: #c0c0c0;
+}
+.btn-sml{
+	font-size: 10px !important;
+}
+.btn-outline-danger:hover{
+	background-color: transparent;
+	color: #dc3545;
+
+}
+.content{
+	font-size: 13px;
+}
+.avi-thumb{
+	width: 50px;
+	height: 50px;
+	background-color: #c0c0c0;
+}
+.table{
+	
+}
+.table td{
+	padding: 2px;
+	padding-bottom: 5px;
+}
+.video{
+	background-color: #c0c0c0;
+	height: 500px;
+	width: 100%;
+}
+.avi-thumb{
+	border-radius: 2em;
+}
+.btn{
+	font-size: 13px;
+	border-radius: 0 !important;
+}
+.form-control,.dropdown-menu{
+	font-size: 13px;
+}
+.navbar{
+	font-size: 15px;
+	padding-left: 20px;
+}
+.navbar-light .navbar-brand{
+	color: #17a2b8;
+}
+
 .btn-accent-basic{
 	background: #fff;
 	border-color: #c0c0c0;
@@ -17,3 +96,34 @@
 .btn-accent-1:hover{
 	background-color: #a8ce65;
 }
+.footer{
+
+}
+nav li{
+	margin-right: 20px;
+	//border-bottom: 2px transparent solid;
+	padding:5px;
+}
+nav li:hover{
+	//border-bottom: 3px solid #ff5c30;
+}
+.currentitem{
+	font-weight: bold;
+	//border-bottom: 3px solid #ff5c30;
+}
+footer{
+	width: 100%;
+	padding: 20px;
+}
+.footer{
+	font-family: Roboto Light !important;
+	font-size:13px;
+}
+/*
+<form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" style='border-radius:2em 0em 0em 2em;width:350px;'>
+        </div>
+        <button type="submit" class="btn btn-accent-basic" style='border-radius:0em 2em 2em 0em;margin-left:-5px;margin-top:-1px;'><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
+      */
