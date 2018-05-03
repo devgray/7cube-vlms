@@ -1,0 +1,19 @@
+*{
+	margin:0 auto;
+	font-family: Roboto Light;
+	font-size: 13px;
+}
+.btn-accent-basic{
+	background: #fff;
+	border-color: #c0c0c0;
+}
+.btn-accent-basic:hover{
+	background: #c6ed80;
+	border-color: #a8ce65;
+}
+.btn-accent-1{
+	background-color: #c6ed80;
+}
+.btn-accent-1:hover{
+	background-color: #a8ce65;
+}
