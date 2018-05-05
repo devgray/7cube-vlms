@@ -54,7 +54,7 @@
           <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;'>
       <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;'>
-      <button type="button" class="btn btn-outline-info">Register or Login</button>
+      <a href='index.php'><button type="button" class="btn btn-outline-info">Register or Login</button></a>
     </form>
       </li>
       <li class="nav-item">

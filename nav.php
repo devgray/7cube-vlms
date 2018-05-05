@@ -16,18 +16,20 @@
 
     <ul class='navbar-nav'>
     	<li class="nav-item">
+        <div class="btn-group" role="group" aria-label="Basic example">
         <div class="dropdown">
   <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     @username
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Account</a>
+    <a class="dropdown-item" href="user.php">View Profile</a>
+    <a class="dropdown-item" href="#">Account Settings</a>
     <a class="dropdown-item" href="#">Logout</a>
   </div>
 </div>
-      </li>
-      <li class="nav-item">
-        <button type="button" class="btn btn-outline-info">Upload</button>
+      <!-- </li>
+      <li class="nav-item"> -->
+        <button type="button" class="btn btn-outline-info">Upload</button></div>
       </li>
       
     </ul>

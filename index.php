@@ -39,12 +39,14 @@
 
 <?php include "nav.php"; ?>
 <div class='content'>
-<div class='container'><div class='row'><div class='col-lg-9 col-md-10 col-sm-12'>
+<div class='container'><div class='row'><div class='col-lg-9 col-sm-12'>
 
 	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'><!-- VIDEO HEADER -->
 		<tr><td>
 			<div class='video'>
-
+				<video width='100%' controls>
+                <source src='videos/Photoshop Tutorial- Water Splash in Bulb.mp4' type='video/mp4' >
+                </video>
 			</div></td>
 	</tr>
 	<tr>
@@ -64,8 +66,10 @@
 			<tr>
 				<td width="60"><img class='avi-thumb'/></td>
 				<td width="70%"><button type="button" class="btn btn-light" style='text-align:left;padding-left:0px;'>@username, <span class='subtext'>@usertype</span><br>Uploaded on @date</button></td>
-				<td><button type="button" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button></td>
-				<td><button type="button" class="btn btn-outline-info">Subscribe</button></td>
+				<td><div class="btn-group" role="group" aria-label="Basic example">
+					<button type="button" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button>
+					<button type="button" class="btn btn-outline-info">Subscribe</button></div>
+				</td>
 				</tr>
 	</table>
 
@@ -84,14 +88,16 @@
 				<td width="60"><img class='avi-thumb'/></td>
 				<td width="100%"><blockquote class='blockquote comment'>@username, <span class='subtext'>@usertype</span><br>
 					<form><div class="form-group">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea><br>
+    <button type="button" class="btn btn-outline-info" style='float:right;'> Post Comment</button>
   </div>
-</form></blockquote></td>
+</form></blockquote>
+</td>
 				
 			</tr>
 			<tr>
 				<td></td>
-				<td align='right'><button type="button" class="btn btn-outline-info"> Post Comment</button></td>
+				<td align='right'></td>
 			</tr>
 	</table>
 
@@ -104,7 +110,40 @@
 			</tr>
 	</table>
 
-</div></div>
+</div>
+
+	<div class='col-lg-3 col-md-4 col-sm-12'>
+		<table class='table table-borderless'>
+
+			<tr>
+			<td>
+				<a href="#" class='btn thumb'>
+				<video width='100%' >
+                <source src='videos/Photoshop Tutorial- Water Splash in Bulb.mp4' type='video/mp4' >
+                </video>
+				<div class='thumb-title'><b>Video Title</b><br>by @username</div>
+				</a>
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+				<a href="" class='btn thumb'>
+				<video width='100%' >
+                <source src='videos/Dispersion Effect- Photoshop Tutorial.mp4' type='video/mp4' >
+                </video>
+				<div class='thumb-title'><b>Video Title</b><br>by @username</div>
+				</a>
+			</td>
+			</tr>
+
+		</table>
+
+
+	</div>
+
+
+</div>
 </div>
 
 </div> <!-- end div content -->
