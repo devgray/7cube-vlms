@@ -11,7 +11,17 @@
 	//font-family: Roboto;
 	//color: #1a1a1a !important;
 }
-.signup{
+.category-header{
+	padding: 10px 0px 10px 0px;
+}
+.category-panel{
+	background-color: #f8f9fa !important;
+	padding: 10px;
+}
+.browse{
+	font-size: 20px;
+}
+.signup, .input-group-text{
 	font-size: 13px;
 }
 .subtext{
@@ -99,9 +109,12 @@ color: #c0c0c0;
 	color: #17a2b8;
 }
 .thumb{
-	padding: 0px 10px 10px 10px;
+	//padding: 0px 10px 10px 10px;
 	//height: 150px;
 	width: 100%;
+}
+.thumb:hover{
+	text-decoration: none;
 }
 .thumb-title{
 	text-align: left;
