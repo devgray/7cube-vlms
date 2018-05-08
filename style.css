@@ -9,6 +9,9 @@ a{
 a:hover{
 	text-decoration: underline;
 }
+.card{
+	border-radius: 0;
+}
 .title{
 	font-family: 'UpperSide';
 	font-size: 25px;
