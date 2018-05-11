@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php include 'functions.php'; 
+if(!isset($_SESSION['loggedin'])){
+  header("Refresh:0; URL=login.php");
+}?>
+ <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php include "head.php"; ?>
@@ -98,8 +102,71 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
+        
+          <table class='table'>
+              <tr>
+                  <th width='40%'>
+                      Comment
+                  </th>
+                <th width='15%'>
+                    Posted by
+                </th>
+                <th width='15%'>
+                    Reported by
+                </th>
+                <th width='10%'>
+                    Video ID
+                </th>
+                <th width='20%'>
+                    Action
+                </th>
+              </tr>
+
+              <tr>
+                <td>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                </td>
+                <td>
+                  @username
+                </td>
+                <td>
+                  @username
+                </td>
+                <td>
+                  asdefasdadfas
+                </td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;'>
+                  <button type="button" class="btn btn-outline-secondary">Delete Comment</button>
+                  <button type="button" class="btn btn-outline-secondary">Close Report</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
+                </td>
+                <td>
+                  @username
+                </td>
+                <td>
+                  @username
+                </td>
+                <td>
+                  asdefasdadfas
+                </td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;'>
+                  <button type="button" class="btn btn-outline-secondary">Delete Comment</button>
+                  <button type="button" class="btn btn-outline-secondary">Close Report</button>
+                  </div>
+                </td>
+              </tr>
+
+          </table>
+
+        </div>
     </div>
   </div>
 

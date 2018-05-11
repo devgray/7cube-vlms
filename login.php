@@ -1,7 +1,33 @@
+<?php include 'functions.php'; 
+
+  if(isset($_COOKIE['username']) && isset($_COOKIE['password'])){
+     if(checkLogin($_COOKIE['username'],$_COOKIE['password'])){
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+          Logging in...
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+            setcookie("loggedin","true");
+            $_SESSION['loggedin']=true;
+            header("Refresh:1; URL=browse.php");
+        }else{
+            echo '<div class="alert alert-info alert-dismissible fade show" role="alert" align="center">
+          Incorrect username and/or password!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+        deleteCookies();
+        }
+  }
+
+?>
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php include "head.php"; ?>
+
 	</head>
 
 <body>
@@ -21,23 +47,24 @@
     <ul class='navbar-nav'>
       <li class="nav-item">
           <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;'>
-      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;'>
-      <a href='index.php'><button type="button" class="btn btn-outline-info">Register or Login</button></a>
+      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username'>
+      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password'>
+      <button type="submit" class="btn btn-outline-info" id='btnlogin' onclick='login()'>Login</button>&nbsp;
+      <button type="button" class="btn btn-outline-info" id='btnregister' onclick='clickregister()'>Register</button>
     </form>
       </li>
       <li class="nav-item">
         
       </li>
-      
     </ul>
     
 
   </div>
+
 </nav>
 
-<div class="container-fluid">
-  <div class='row'><div class='col-sm-12'>
+<!-- <div class="container-fluid">
+  <div class='row'><div class='col-sm-12'> -->
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -64,8 +91,8 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-  </div></div>
-</div>
+<!--   </div></div>
+</div> -->
 
 
 

@@ -1,3 +1,4 @@
+	
 <title>7Cube VLMS</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 <!--	
@@ -8,6 +9,8 @@
 	-->
 
 <link rel="stylesheet" href="bootstrap-cdn.min.css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 
 <script src="jquery/jq.slim.min.js"></script>
 <script src="jquery/popper.min.js"></script>

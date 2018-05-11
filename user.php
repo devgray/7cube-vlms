@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php include 'functions.php'; 
+if(!isset($_SESSION['loggedin'])){
+  header("Refresh:0; URL=login.php");
+}?>
+ <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php include "head.php"; ?>
