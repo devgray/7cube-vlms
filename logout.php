@@ -4,7 +4,6 @@ if(!isset($_SESSION['loggedin'])){
 }else{
 	
 }
-session_start();
 session_destroy();
 $str="";
 $substr="";

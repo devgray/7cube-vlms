@@ -1,8 +1,7 @@
 
-
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue) {
     var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue;
     // + ";" + expires + ";path=/";
@@ -37,23 +36,51 @@ function checkCookie(cname) {
 function login(){
 	var u= document.getElementById('username');
 	var p= document.getElementById('password');
-	setCookie("username", u.value,1);
-	setCookie("password", p.value,1);
+	setCookie("username", u.value);
+	setCookie("password", p.value);
 }
 
 function logout(){
 	window.location.href = "login.php";
 }
-function newUser(){
-	var pw=document.getElementById('inputPassword');
-	var cpw=document.getElementById('confirmPassword');
-	var error=document.getElementById('error');
+function confirmPassword(pw,cpw){
+    if(pw==cpw){
+        return true;
+    }else return false;
+}
+function checkPw(){
+    var pw=document.getElementById('inputPassword');
+    var cpw=document.getElementById('confirmPassword');
 
-	if(pw==cpw){
-		error.value="";
-	}else{
-		error.value="Password does not match";
-	}
+    if(pw.value!="" && cpw.value!=""){
+        if(confirmPassword(pw.value,cpw.value)){
+            pw.classList.remove('is-invalid');
+            cpw.classList.remove('is-invalid');
+            pw.classList.add('is-valid');
+            cpw.classList.add('is-valid');
+        }else{
+            pw.classList.add('is-invalid');
+            cpw.classList.add('is-invalid');
+            document.getElementById('confpwtooltip').innerHTML="Password does not match!";
+        }
+    }else{
+        pw.classList.add('is-invalid');
+        cpw.classList.add('is-invalid');
+        document.getElementById('confpwtooltip').innerHTML="Required field";
+    }
+}
+function checkUsername(){
+
+}
+function newUser(){
+    var query="CALL addUser("+document.getElementById('inputUsername').value+","
+        +document.getElementById('inputPassword').value+","
+        +document.getElementById('inputEmail').value+","
+        +document.getElementById('fullName').value+","
+        +document.getElementById('bio').value+","
+        +document.getElementById('userType').value+")";
+    document.write(query);
+    setCookie('newUser',query);
 }
 function clickregister(){
 	window.location.href = "new.php";	

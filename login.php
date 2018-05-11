@@ -46,10 +46,10 @@
 
     <ul class='navbar-nav'>
       <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username'>
-      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password'>
-      <button type="submit" class="btn btn-outline-info" id='btnlogin' onclick='login()'>Login</button>&nbsp;
+          <form class="form-inline my-2 my-lg-0" onsubmit='login()'>
+      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username' required>
+      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password' required>
+      <button type="submit" class="btn btn-outline-info" id='btnlogin' >Login</button>&nbsp;
       <button type="button" class="btn btn-outline-info" id='btnregister' onclick='clickregister()'>Register</button>
     </form>
       </li>

@@ -31,7 +31,15 @@ function deleteCookies(){
 		setcookie($parts[0],'',1);	
 	}
 }
+function newUser(){
+	global $db;
+	$query=$_COOKIE['newUser'];
+	if(mysqli_query($db,$query)){
 
+	}else{
+		echo "FAILED ADDING NEW USER";
+	}
+}
 function loadGallery(){
 	for($x=10 ; $x > 0 ; $x--){
 		echo "<div class='thumb'> </div>";

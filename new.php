@@ -12,6 +12,10 @@ if(){
   $query="CALL registerUser($user,$pw,$cpw,$name,$bio,$type)";
   mysqli_query($db, $query);
 }*/
+if(isset($_COOKIE['newUser'])){
+  echo "IT GOT IN~";
+  newUser();
+  }
 ?>
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -50,36 +54,39 @@ if(){
   <div class='col-lg-6 col-sm-12 align-self-center'>
 <div align='center'><br>
     <i class="fa fa-cube fa-5x" aria-hidden="true"></i><h3>Sign Up!</h3>
-    <input type='text' id='error' style='border:0;text-align:center;padding:5px;' readonly>
     <br>
 </div>
-      <form class='signup'>
+      <form class='signup needs-validation' onsubmit='newUser()'>
 
   <div class="form-group row">
-    <label for="staticEmail" class="col-sm-3 col-form-label">Username</label>
+    <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="staticEmail" name='username'>
+      <input type="text" class="form-control" id="inputUsername" name='username' required>
     </div>
   </div>
 
   <div class="form-group row">
-    <label for="exampleFormControlInput1" class="col-sm-3 col-form-label">Email</label>
+    <label for="inputEmail" class="col-sm-3 col-form-label">Email</label>
     <div class="col-sm-9">
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name='email'>
+      <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" name='email' required>
     </div>
   </div>
 
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-3 col-form-label" >Password</label>
     <div class="col-sm-9">
-      <input type="password" class="form-control" id="inputPassword" name='password'>
+      <input type="password" class="form-control" id="inputPassword" name='password' onblur='checkPw()' required>
+      
     </div>
+    
   </div>
 
   <div class="form-group row">
     <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
     <div class="col-sm-9">
-      <input type="password" class="form-control" id="confirmPassword" name='confpassword'>
+      <input type="password" class="form-control" id="confirmPassword" name='confpassword' onblur='checkPw()' required>
+      <div class="invalid-tooltip" id='confpwtooltip'>
+      </div>
     </div>
   </div>
     
@@ -87,7 +94,7 @@ if(){
   <div class="form-group row">
     <label for="fullName" class="col-sm-3 col-form-label">Full Name</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="fullName" name='fullname'>
+      <input type="text" class="form-control" id="fullName" name='fullname' required>
     </div>
   </div>
 
@@ -101,16 +108,17 @@ if(){
   <div class="form-group row">
     <label for="userType" class="col-sm-3 col-form-label">I'm a</label>
     <div class="col-sm-9">
-      <select id="userType" class="form-control" name='usertype'>
-        <option selected>Choose...</option>
-        <option>...</option>
+      <select id="userType" class="custom-select" name='usertype' required>
+        <option selected>Please Choose</option>
+        <option value='1'>Moderator</option>
       </select>
+      <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
 <div align='center'>
 <div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-outline-secondary">Clear</button>
-  <button type="button" class="btn btn-outline-secondary" name='btnsubmit' onclick='newUser()'>Submit</button>
+  <button type="submit" class="btn btn-outline-secondary" name='btnsubmit'>Submit</button>
 </div>
 </div>
 
