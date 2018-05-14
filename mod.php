@@ -1,6 +1,6 @@
 <?php include 'functions.php'; 
-if(!isset($_SESSION['loggedin'])){
-  header("Refresh:0; URL=login.php");
+if(!isset($_SESSION['modid'])){
+  header("Refresh:0; URL=login");
 }?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -8,7 +8,8 @@ if(!isset($_SESSION['loggedin'])){
 	<?php include "head.php"; ?>
 	</head>
 
-<body>
+<body <?php if(!isset($_SESSION['modid'])){
+  echo "hidden";}else{echo "";} ?>>
 
 <?php include "nav.php"; ?>
 <div class='content'>

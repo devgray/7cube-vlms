@@ -1,6 +1,6 @@
 <?php include 'functions.php'; 
 if(!isset($_SESSION['loggedin'])){
-  header("Refresh:0; URL=login.php");
+  header("Refresh:0; URL=login");
 }else{
 	
 }
@@ -27,7 +27,7 @@ foreach ( $_COOKIE as $key => $value )
 echo "<br>".$substr;
 //setcookie("function_login(){___setCookie(login,_document_getElementById('login'),_1)",'',1);
 
-header("Refresh:2; URL=login.php");
+header("Refresh:2; URL=login");
 ?>
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">

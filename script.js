@@ -1,3 +1,19 @@
+$(document).ready(function () {
+ 
+window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 5000);
+ 
+});
+
+function setUserInfo(){
+    document.getElementById('fname').innerHTML=getCookie('fname').replace("+"," ");
+    document.getElementById('usertype').innerHTML=getCookie('usertype');
+    document.getElementById('username').innerHTML=getCookie('username');
+
+}
 
 function setCookie(cname, cvalue) {
     var d = new Date();
@@ -72,18 +88,46 @@ function checkPw(){
 function checkUsername(){
 
 }
+function registerUser(user,email,pw,fname,bio,type){
+    var query="CALL registerUser('"+user+"','"
+            +email+"','"
+            +pw+"','"
+            +fname+"','"
+            +bio+"',"
+            +type+")";
+        setCookie('newUser',query);
+}
+function delvideo(path){
+    setCookie('setdelvideo',path);
+}
+function confirmdeletevideo(){
+    setCookie('delvideo',getCookie('setdelvideo'));
+}
+function playToSide(path){
+    var v=document.getElementById('uservideo');
+    v.src=path;
+}
 function newUser(){
-    var query="CALL addUser("+document.getElementById('inputUsername').value+","
-        +document.getElementById('inputPassword').value+","
-        +document.getElementById('inputEmail').value+","
-        +document.getElementById('fullName').value+","
-        +document.getElementById('bio').value+","
-        +document.getElementById('userType').value+")";
-    document.write(query);
-    setCookie('newUser',query);
+    var user=document.getElementById('inputUsername');
+    var pw=document.getElementById('inputPassword');
+    var email=document.getElementById('inputEmail');
+    var fname=document.getElementById('fullName');
+    var bio=document.getElementById('userBio');
+    var type=document.getElementById('userType');
+
+    
+    
+}
+function clearRegisterPage(){
+    document.getElementById('inputUsername').value="";
+    document.getElementById('inputPassword').value="";
+    document.getElementById('confirmPassword').value="";
+    document.getElementById('inputEmail').value="";
+    document.getElementById('fullName').value="";
+    document.getElementById('userBio').value="";
 }
 function clickregister(){
-	window.location.href = "new.php";	
+	window.location.href = "new";	
 }
 
 function loadGallery(){

@@ -13,8 +13,7 @@ if(){
   mysqli_query($db, $query);
 }*/
 if(isset($_COOKIE['newUser'])){
-  echo "IT GOT IN~";
-  newUser();
+  registerUser();
   }
 ?>
 <!DOCTYPE html>
@@ -26,7 +25,7 @@ if(isset($_COOKIE['newUser'])){
 <body>
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="index.php"><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
+  <a class="navbar-brand" href="login"><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
   
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -56,7 +55,8 @@ if(isset($_COOKIE['newUser'])){
     <i class="fa fa-cube fa-5x" aria-hidden="true"></i><h3>Sign Up!</h3>
     <br>
 </div>
-      <form class='signup needs-validation' onsubmit='newUser()'>
+      <form class='signup needs-validation' onsubmit="registerUser(document.getElementById('inputUsername').value,
+      document.getElementById('inputEmail').value,document.getElementById('inputPassword').value,document.getElementById('fullName').value,document.getElementById('userBio').value,document.getElementById('userType').value)">
 
   <div class="form-group row">
     <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
@@ -109,16 +109,15 @@ if(isset($_COOKIE['newUser'])){
     <label for="userType" class="col-sm-3 col-form-label">I'm a</label>
     <div class="col-sm-9">
       <select id="userType" class="custom-select" name='usertype' required>
-        <option selected>Please Choose</option>
-        <option value='1'>Moderator</option>
+        <?php loadDropdown('tbl_usertype','type','3'); ?>
       </select>
       <div class="invalid-feedback">Example invalid custom select feedback</div>
     </div>
   </div>
 <div align='center'>
 <div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-secondary">Clear</button>
-  <button type="submit" class="btn btn-outline-secondary" name='btnsubmit'>Submit</button>
+  <button type="button" class="btn btn-outline-secondary" onclick='clearRegisterPage()'>Clear</button>
+  <button type="submit" class="btn btn-outline-secondary" name='btnsubmit' id='btnsubmit'>Submit</button>
 </div>
 </div>
 

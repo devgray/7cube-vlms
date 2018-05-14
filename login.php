@@ -1,16 +1,15 @@
 <?php include 'functions.php'; 
 
-  if(isset($_COOKIE['username']) && isset($_COOKIE['password'])){
-     if(checkLogin($_COOKIE['username'],$_COOKIE['password'])){
+  if(isset($_POST['btnlogin'])){
+     if(checkLogin($_POST['uname'],$_POST['pw'])){
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
           Logging in...
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>';
-            setcookie("loggedin","true");
             $_SESSION['loggedin']=true;
-            header("Refresh:1; URL=browse.php");
+            header("Refresh:1; URL=browse");
         }else{
             echo '<div class="alert alert-info alert-dismissible fade show" role="alert" align="center">
           Incorrect username and/or password!
@@ -20,6 +19,16 @@
         </div>';
         deleteCookies();
         }
+  }
+
+  if(isset($_COOKIE['newUser'])){
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+          Account created.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+        deleteCookies();     
   }
 
 ?>
@@ -46,10 +55,10 @@
 
     <ul class='navbar-nav'>
       <li class="nav-item">
-          <form class="form-inline my-2 my-lg-0" onsubmit='login()'>
-      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username' required>
-      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password' required>
-      <button type="submit" class="btn btn-outline-info" id='btnlogin' >Login</button>&nbsp;
+          <form class="form-inline my-2 my-lg-0" action="" method="POST">
+      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username' name='uname' required>
+      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password' name='pw' required>
+      <button type="submit" class="btn btn-outline-info" id='btnlogin' name='btnlogin'>Login</button>&nbsp;
       <button type="button" class="btn btn-outline-info" id='btnregister' onclick='clickregister()'>Register</button>
     </form>
       </li>

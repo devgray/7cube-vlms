@@ -1,6 +1,10 @@
-<?php include 'functions.php'; 
+<?php include 'functions.php';
+getVideoInfo($_GET['v']);
+
 if(!isset($_SESSION['loggedin'])){
-  header("Refresh:0; URL=login.php");
+  header("location: login");
+}else if(!isset($_GET['v'])){
+	header("location: browse");
 }?>
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -8,7 +12,8 @@ if(!isset($_SESSION['loggedin'])){
 	<?php include "head.php"; ?>
 	</head>
 
-<body>
+<body <?php if(!isset($_GET['v'])){
+	echo "hidden";}else{echo "";} ?>>
 
 <?php include "nav.php"; ?>
 <div class='content'>
@@ -18,18 +23,18 @@ if(!isset($_SESSION['loggedin'])){
 		<tr><td>
 			<div class='video'>
 				<video width='100%' controls>
-                <source src='videos/Photoshop Tutorial- Water Splash in Bulb.mp4' type='video/mp4' >
+                <source src='<?php echo $_SESSION["vidfilepath"]; ?>' type='video/mp4' >
                 </video>
 			</div></td>
 	</tr>
 	<tr>
 		<td>
-		<h2>Video Title</h2>
+		<h2><?php echo $_SESSION['vidtitle']; ?></h2>
 		</td>
 	</tr>
 	<tr>
 		<td>
-		1,234 views
+		<?php echo $_SESSION['vidviews']; ?> views
 		</td>
 	</tr>
 
@@ -38,7 +43,7 @@ if(!isset($_SESSION['loggedin'])){
 	<table class='table table-borderless'> 
 			<tr>
 				<td width="60"><img class='avi-thumb'/></td>
-				<td width="70%"><button type="button" class="btn btn-light" style='text-align:left;padding-left:0px;'>@username, <span class='subtext'>@usertype</span><br>Uploaded on @date</button></td>
+				<td width="70%"><button type="button" class="btn btn-light" style='text-align:left;padding-left:0px;'><?php echo $_SESSION['vidusername']; ?>, <span class='subtext'><?php echo $_SESSION['vidusertype']; ?></span><br>Uploaded on <?php echo $_SESSION['viddate']; ?></button></td>
 				<td><div class="btn-group" role="group" aria-label="Basic example">
 					<button type="button" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button>
 					<button type="button" class="btn btn-outline-info">Subscribe</button></div>
@@ -49,8 +54,8 @@ if(!isset($_SESSION['loggedin'])){
 	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'> <!-- VIDEO DESCRIPTION -->
 			<tr>
 				<td><blockquote class="blockquote">
-  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-  <footer class="blockquote-footer">tags, tags, tags <cite title="Source Title"><button type="button" class="btn btn-outline-info" style='border:0;'>@category</button></cite></footer>
+  <p class="mb-0"><?php echo $_SESSION['vidinfo']; ?></p>
+  <footer class="blockquote-footer"><?php echo $_SESSION['vidtags']; ?>,<cite title="Source Title"><button type="button" class="btn btn-outline-info" style='border:0;'><?php echo $_SESSION['vidcategory']; ?></button></cite></footer>
 </blockquote></td>
 				</tr>
 	</table>
@@ -86,31 +91,7 @@ if(!isset($_SESSION['loggedin'])){
 </div>
 
 	<div class='col-lg-3 col-md-4 col-sm-12'>
-		<table class='table table-borderless'>
-
-			<tr>
-			<td>
-				<a href="#" class='thumb'>
-				<video width='100%' >
-                <source src='videos/Photoshop Tutorial- Water Splash in Bulb.mp4' type='video/mp4' >
-                </video>
-				<div class='thumb-title'><b>Video Title</b><br>by @username</div>
-				</a>
-			</td>
-			</tr>
-
-			<tr>
-			<td>
-				<a href="#" class='thumb'>
-				<video width='100%' >
-                <source src='videos/Dispersion Effect- Photoshop Tutorial.mp4' type='video/mp4' >
-                </video>
-				<div class='thumb-title'><b>Video Title</b><br>by @username</div>
-				</a>
-			</td>
-			</tr>
-
-		</table>
+		<?php loadVideos(); ?>
 
 
 	</div>
