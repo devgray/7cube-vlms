@@ -103,8 +103,18 @@ function delvideo(path){
 function confirmdeletevideo(){
     setCookie('delvideo',getCookie('setdelvideo'));
 }
+function repvideo(code){
+    setCookie('repvideo',code);
+}
+function confirmrepvideo(){
+    setCookie('repvideo',getCookie('setrepvideo'));
+}
 function playToSide(path){
     var v=document.getElementById('uservideo');
+    v.src=path;
+}
+function modplayToSide(path){
+    var v=document.getElementById('repvideo');
     v.src=path;
 }
 function newUser(){

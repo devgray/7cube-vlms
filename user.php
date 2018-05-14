@@ -70,7 +70,7 @@ if(isset($_COOKIE['delvideo'])){
 	</tr>
 	<tr>
 		<td>
-		<h2 id='usertitle'><?php if(isset($_GET['v'])){ echo getVideoTitle($_GET['v']); }?></h2>
+		<a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?> ><h2 id='usertitle'><?php if(isset($_GET['v'])){ echo getVideoTitle($_GET['v']); }?></h2></a>
 		</td>
 	</tr>
 	</table>

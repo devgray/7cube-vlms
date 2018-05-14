@@ -1,7 +1,19 @@
 <?php include 'functions.php'; 
 if(!isset($_SESSION['modid'])){
   header("Refresh:0; URL=login");
-}?>
+}
+if(isset($_GET['v'])){
+  getVideoInfo($_GET['v']);
+}else{
+  $_SESSION['vidtitle']="";
+  $_SESSION['vidusername']="";
+  $_SESSION['vidinfo']="";
+  $_SESSION['vidcategory']="";
+}
+if(isset($_COOKIE['delvideo'])){
+  deleteVideo($_COOKIE['delvideo']);
+}
+?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -30,59 +42,43 @@ if(!isset($_SESSION['modid'])){
       <div class="card-body">
       	<div class='row'>
       		<div class='col-sm-6'>
-        		<table class='table'>
-					<tr>
-		                <td><b>Report Header</b><br>
-		                	Report content - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</td>
-		                <td width='10%'>
-		                	<button type="button" class="btn btn-outline-secondary active">Play</button>
-		                </td>
-		            </tr>
-
-		            <tr>
-		                <td><b>Report Header</b><br>
-		                	Report content - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</td>
-		                <td width='10%'>
-		                	<button type="button" class="btn btn-outline-secondary active">Play</button>
-		                </td>
-		            </tr>
-				</table>
+        		<?php loadReportedVideos(); ?>
 		</div>
 
 			<div class='col-sm-6'>
-				<video width='100%' controls>
-                <source src='videos/Photoshop Tutorial- Water Splash in Bulb.mp4' type='video/mp4' >
+				<video width='100%' style='padding-bottom:10px;' controls>
+                <source id='repvideo' <?php if(isset($_GET['v'])){ echo "src='".getFilePath($_GET['v'])."'"; }?> type='video/mp4' >
                 </video>
                 <table class='table table-borderless'>
                 	<tr>
                 		<td width='30%'>Video Title</td>
-                		<td>Lorem ipsum </td>
+                		<td><a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?>> <?php echo $_SESSION['vidtitle']; ?></a></td>
                 	</tr>
                 	<tr>
                 		<td>Uploader</td>
-                		<td>@username</td>
+                		<td><a <?php if(isset($_GET['v'])){ echo "href='user?u=".$_SESSION['vidusername']."'"; }?>><?php echo $_SESSION['vidusername']; ?></a></td>
                 	</tr>
                 	<tr>
                 		<td>Description</td>
-                		<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</td>
+                		<td><?php echo $_SESSION['vidinfo']; ?></td>
                 	</tr>
                 	<tr>
                 		<td>Category</td>
                 		<td><select id="userType" class="form-control">
-					        <option selected>Choose...</option>
-					        <option>...</option>
+					        <?php loadSelectedDropdown('tbl_category','name',$_SESSION['vidcategory']); ?>
 					      </select></td>
                 	</tr>
 
 
                 </table>
                 <div align='right'>
-                <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;'>
+                <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;' <?php if(!isset($_GET['v'])){echo "hidden";}else{echo "";} ?> >
 		  
 
 		  		  <button type="button" class="btn btn-outline-secondary">Update</button>
 				  <button type="button" class="btn btn-outline-secondary">Close Report</button>
-				  <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Remove Video</button>
+          <button type='button' <?php echo "value='".$_SESSION['vidfilepath']."'"; ?> onclick='delvideo(this.value)' class='btn btn-outline-secondary'
+          data-toggle='modal' data-target='#deleteVideoModal'>Remove Video</button>
 
 				</div>
 				</div>
@@ -181,7 +177,7 @@ if(!isset($_SESSION['modid'])){
 <?php include "footer.php"; ?>
 
 <!-- MODALS -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteVideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,18 +188,14 @@ if(!isset($_SESSION['modid'])){
       </div>
       <div class="modal-body">
         <div class="form-group row">
-		    <label for="userType" class="col-sm-3 col-form-label">Select Reason</label>
-		    <div class="col-sm-9">
-		      <select id="userType" class="form-control">
-		        <option selected>Choose...</option>
-		        <option>...</option>
-		      </select>
-		    </div>
-		  </div>
+          <div class="col-sm-12">
+        <label for="userType" class="col-sm-12 col-form-label">This action cannot be undone.</label>
+        </div>
+      </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Remove</button>
+        <a type="button" class="btn btn-danger" onclick='confirmdeletevideo()' <?php echo "href='mod'"; ?> >Delete</a>
       </div>
     </div>
   </div>

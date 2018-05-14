@@ -36,7 +36,7 @@ function registerUser(){
 	global $db;
 	$query=$_COOKIE['newUser'];
 	if(mysqli_query($db,$query)){
-		header("location: login.php");
+		header("location: login");
 	}else{
 		echo "FAILED ADDING NEW USER";
 		deleteCookies();
@@ -108,6 +108,20 @@ global $db;
     }
     mysqli_query($db,"UPDATE tbl_video set views=views+1 where code='$code'");
 }
+function getRepVideoInfo($code){
+global $db;
+    $query = "SHOW COLUMNS FROM videoinfo";
+
+    $result= mysqli_query($db,$query);
+    $data= mysqli_query($db,"SELECT *FROM videoinfo where code='$code'");
+    while($row = mysqli_fetch_array($result)){
+        foreach ($data as $rowdata) {
+        $colname=$row['Field'];
+        $_SESSION["rep".$colname]="".$rowdata[$colname];
+        }
+    }
+    mysqli_query($db,"UPDATE tbl_video set views=views+1 where code='$code'");
+}
 function loadDropdown($table,$header,$hide){
     global $db;
     $query="SELECT * from $table";
@@ -118,6 +132,23 @@ function loadDropdown($table,$header,$hide){
             $x = $row[$header];
             if($hide!=$id){
             	echo  "<option value='$id'>$x</option>" ;
+            }
+            
+        }
+}
+function loadSelectedDropdown($table,$header,$selected){
+    global $db;
+    $query="SELECT * from $table";
+
+    $result= mysqli_query($db,$query);
+        foreach ($result as $row) {
+            $id=$row['id'];
+            $x = $row[$header];
+            if($x!=""){
+                if($x==$selected){
+                    echo  "<option value='$id' selected>$x</option>" ;
+                }else
+                echo  "<option value='$id'>$x</option>" ;
             }
             
         }
@@ -236,7 +267,12 @@ function manageVideos($user){
             echo "<a href='user?u=$u&v=$code' value='$filepath' onclick='playToSide(this.value)'><video width='100%'>";
             echo "<source src='$filepath' type='video/mp4' ></video></a></td>";
             echo "<td style='padding:3px 5px; 0px 5px;'><b>$title</b><br>$info<br><p style='font-size:12px;'>$views views</p>";
-            echo "<td width='10%'><button type='button' value='$filepath' onclick='delvideo(this.value)' class='btn btn-secondary' data-toggle='modal' data-target='#deleteVideoModal'>Delete</button></td></tr>";
+            echo "<td width='10%'>";
+                if($_SESSION['logusername']==$user){
+                    echo "<button type='button' value='$filepath' onclick='delvideo(this.value)' class='btn btn-secondary' data-toggle='modal' data-target='#deleteVideoModal'>Delete</button>";
+                }
+
+            echo "</td></tr>";
             
         }
         echo "</table>";
@@ -251,11 +287,32 @@ function getVideoTitle($code){
     $result=mysqli_fetch_assoc(mysqli_query($db,"SELECT title from videoinfo where code='$code'"));
     return $result['title'];
 }
+
 function deleteVideo($path){
     global $db;
     setcookie('delvideo','',1);  
     unlink($path);
     mysqli_query($db,"CALL deleteVideo('$path')");
+}
+function loadReportedVideos(){
+
+    global $db;
+    $query="SELECT *FROM reportedvideos";
+    $result= mysqli_query($db,$query);
+        echo "<table class='table' style='font-size:14px;'>";
+        foreach ($result as $row) {
+            $code=$row['code'];
+            $link="index?v=".$row['code'];
+            $header=$row['header'];
+            $info=$row['description'];
+            echo "<tr><td><b>$header</b><br>";
+            echo "$info";
+            echo '<td width="10%"">
+                            <a type="button" class="btn btn-secondary" href="mod?v='.$code.'" value="$filepath" onclick="modplayToSide(this.value)">Play</a>
+                        </td>
+                    </tr>';
+        }
+        echo "</table>";
 }
 
 function loadGallery(){
