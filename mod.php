@@ -13,6 +13,9 @@ if(isset($_GET['v'])){
 if(isset($_COOKIE['delvideo'])){
   deleteVideo($_COOKIE['delvideo']);
 }
+if(isset($_POST['btnclosereport'])){
+  closeReport($_GET['v']);
+}
 ?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -42,7 +45,7 @@ if(isset($_COOKIE['delvideo'])){
       <div class="card-body">
       	<div class='row'>
       		<div class='col-sm-6'>
-        		<?php loadReportedVideos(); ?>
+        		<div class='scroll' style="height:500px;overflow:auto;"><?php loadReportedVideos(); ?></div>
 		</div>
 
 			<div class='col-sm-6'>
@@ -52,7 +55,7 @@ if(isset($_COOKIE['delvideo'])){
                 <table class='table table-borderless'>
                 	<tr>
                 		<td width='30%'>Video Title</td>
-                		<td><a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?>> <?php echo $_SESSION['vidtitle']; ?></a></td>
+                		<td><a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?>><?php echo $_SESSION['vidtitle']; ?></a></td>
                 	</tr>
                 	<tr>
                 		<td>Uploader</td>
@@ -64,9 +67,7 @@ if(isset($_COOKIE['delvideo'])){
                 	</tr>
                 	<tr>
                 		<td>Category</td>
-                		<td><select id="userType" class="form-control">
-					        <?php loadSelectedDropdown('tbl_category','name',$_SESSION['vidcategory']); ?>
-					      </select></td>
+                		<td><?php echo $_SESSION['vidcategory']; ?></td>
                 	</tr>
 
 
@@ -74,9 +75,8 @@ if(isset($_COOKIE['delvideo'])){
                 <div align='right'>
                 <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;' <?php if(!isset($_GET['v'])){echo "hidden";}else{echo "";} ?> >
 		  
-
-		  		  <button type="button" class="btn btn-outline-secondary">Update</button>
-				  <button type="button" class="btn btn-outline-secondary">Close Report</button>
+				  <button type="button" class="btn btn-outline-secondary" class='btn btn-outline-secondary'
+          data-toggle='modal' data-target='#closereportmodal'>Close Report</button>
           <button type='button' <?php echo "value='".$_SESSION['vidfilepath']."'"; ?> onclick='delvideo(this.value)' class='btn btn-outline-secondary'
           data-toggle='modal' data-target='#deleteVideoModal'>Remove Video</button>
 
@@ -196,6 +196,31 @@ if(isset($_COOKIE['delvideo'])){
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
         <a type="button" class="btn btn-danger" onclick='confirmdeletevideo()' <?php echo "href='mod'"; ?> >Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal fade" id="closereportmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Close Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <div class="col-sm-12">
+        <label for="userType" class="col-sm-12 col-form-label">This action cannot be undone.</label>
+        </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button><form style="margin:0;padding:0;" action="" method="post">
+        <button type="submit" class="btn btn-danger" name='btnclosereport'>Submit</button></form>
       </div>
     </div>
   </div>

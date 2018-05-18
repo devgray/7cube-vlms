@@ -24,7 +24,7 @@ foreach ( $_COOKIE as $key => $value )
 	
 
 /*echo $str;*/
-echo "<br>".$substr;
+//echo "<br>".$substr;
 //setcookie("function_login(){___setCookie(login,_document_getElementById('login'),_1)",'',1);
 
 header("Refresh:2; URL=login");

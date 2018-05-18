@@ -19,7 +19,11 @@ if(!isset($_SESSION['loggedin'])){
 
 <div class='container'>
 <br>
-<?php browsevideos(); ?>
+<?php if(isset($_GET['s'])){
+	search($_GET['s']); 
+	}else browsevideos("");
+
+	?>
 
 
 </div>

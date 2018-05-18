@@ -14,7 +14,6 @@ function setUserInfo(){
     document.getElementById('username').innerHTML=getCookie('username');
 
 }
-
 function setCookie(cname, cvalue) {
     var d = new Date();
     d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000));
@@ -88,12 +87,11 @@ function checkPw(){
 function checkUsername(){
 
 }
-function registerUser(user,email,pw,fname,bio,type){
+function registerUser(user,email,pw,fname,type){
     var query="CALL registerUser('"+user+"','"
             +email+"','"
             +pw+"','"
-            +fname+"','"
-            +bio+"',"
+            +fname+"',"
             +type+")";
         setCookie('newUser',query);
 }

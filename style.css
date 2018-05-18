@@ -9,6 +9,9 @@ a{
 a:hover{
 	text-decoration: underline;
 }
+.userpanel{
+	border:2px solid black !important;
+}
 .card{
 	border-radius: 0;
 }

@@ -9,6 +9,22 @@ if(!isset($_SESSION['loggedin'])){
 if(isset($_POST['btnreportvid'])){
 	reportVideo($_GET['v'],$_POST['reportreason'],$_POST['inputDesc']);
 }
+if(isset($_POST['btnsub'])){
+    subscribe($_SESSION['viduserid'],$_SESSION['logid']);
+    header("Location: index?v=".$_GET['v']);
+}
+if(isset($_POST['btnunsub'])){
+    unsubscribe($_SESSION['viduserid'],$_SESSION['logid']);
+    header("Location: index?v=".$_GET['v']);
+}
+if(isset($_POST['btnfav'])){
+    addfav($_SESSION['vidid'],$_SESSION['logid']);
+    header("Location: index?v=".$_GET['v']);
+}
+if(isset($_POST['btnunfav'])){
+    unfav($_SESSION['vidid'],$_SESSION['logid']);
+    header("Location: index?v=".$_GET['v']);
+}
 function reportVideo($code,$head,$info){
     global $db; 
     $logid=$_SESSION['logid'];
@@ -23,6 +39,8 @@ function reportVideo($code,$head,$info){
         header("Refresh:2,URL: index?v=$code");
     }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -37,7 +55,7 @@ function reportVideo($code,$head,$info){
 <div class='content'>
 <div class='container'><div class='row' ><div class='col-lg-9 col-sm-12'>
 
-	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'><!-- VIDEO HEADER -->
+	<table class='table table-borderless'><!-- VIDEO HEADER -->
 		<tr><td>
 			<div class='video'>
 				<video width='100%' controls>
@@ -54,36 +72,58 @@ function reportVideo($code,$head,$info){
 		<td>
 		<?php echo $_SESSION['vidviews']; ?> views
 		</td>
+
 	</tr>
 
 	</table>
-
-	<table class='table table-borderless'> 
+<div class='pad' style='background:#effcff;'>
+	<table class='table table-borderless'  style='margin-bottom:0px;'>
 			<tr>
-				<td width="60"><a <?php echo "href='user?u=".$_SESSION['vidusername']."'"; ?>><img class='avi-thumb'/></a></td>
-				<td width="70%" style='font-size:13px;padding:8px 0px 0px 5px;'><?php echo $_SESSION['vidusername']; ?>, 
-					<span class='subtext'><?php echo $_SESSION['vidusertype']; ?></span><br>Uploaded on <?php echo $_SESSION['viddate']; ?></td>
-				<td><div class="btn-group" role="group" aria-label="Basic example">
-					<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#reportVideoModal">Report Video</button>
-					<button type="button" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button>
-					<button type="button" class="btn btn-outline-info">Subscribe</button>
+				<td width="60"><a <?php echo "href='user?u=".$_SESSION['vidusername']."'"; ?>><img class='avi-thumb' src="img/avi.png" /></a></td>
+				<td style='font-size:16px;'><a <?php if(isset($_GET['v'])){ echo "href='user?u=".$_SESSION['vidusername']."'"; }?>><?php echo $_SESSION['vidusername']; ?></a>, 
 					
-				</div>
+					<span class='subtext'><?php echo $_SESSION['vidusertype']; ?></span><br><div style='font-size:12px;'><?php echo getSubCount($_SESSION['viduserid']); ?> Subscriber/s</div></td>
+				<td width="20%" align='right'>
+
+					<form action="" method="post">
+					<div class="btn-group" role="group" aria-label="Basic example" <?php if($_SESSION['logusername']==$_SESSION['vidusername']){echo "hidden";}else{echo "";} ?> >
+					<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#reportVideoModal">Report Video</button>
+					
+					
+					<?php 
+					if(checkFav($_SESSION['vidid'],$_SESSION['logid'])){
+						echo '<button type="submit" class="btn btn-info" name="btnunfav"><i class="fa fa-heart" aria-hidden="true"></i> Added</button>';
+					}else{
+						echo '<button type="submit" class="btn btn-outline-info" name="btnfav"><i class="fa fa-plus" aria-hidden="true"></i> Favorites</button>';
+					}
+
+					if(checkSub($_SESSION['viduserid'],$_SESSION['logid'])){
+						echo '<button type="submit" class="btn btn-info" name="btnunsub">Subscribed</button>';
+					}else{
+						echo '<button type="submit" class="btn btn-outline-info" name="btnsub">Subscribe</button>';
+					}
+					?>
+
+					
+				</div></form>
 				</td>
 				</tr>
-	</table>
-
-	<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'> <!-- VIDEO DESCRIPTION -->
+	</table></div>
+<div class='pad' style='background:#effcff;margin-bottom:10px;'>
+	<table class='table table-borderless' style='margin-bottom:0;' > <!-- VIDEO DESCRIPTION -->
 			<tr>
-				<td><blockquote class="blockquote">
-  <p class="mb-0"><?php echo $_SESSION['vidinfo']; ?></p>
-  <footer class="blockquote-footer"><?php echo $_SESSION['vidtags']; ?>,<cite title="Source Title"><button type="button" class="btn btn-outline-info" style='border:0;'><?php echo $_SESSION['vidcategory']; ?></button></cite></footer>
+				<td><blockquote style='font-size:13px;margin-bottom:0;'>
+  <p class="mb-0" style='text-align:justify;font-size:16px;'><?php echo $_SESSION['vidinfo']; ?></p><br><br><hr>
+  <p style='margin-bottom:0;'><span style='font-size:12px;'>Tags: <?php echo $_SESSION['vidtags']; ?><br>Category: 
+  	<?php echo $_SESSION['vidcategory']; ?>
+  <br>Uploaded on <?php echo $_SESSION['viddate']; ?></span></p>
+
 </blockquote></td>
 				</tr>
-	</table>
+	</table></div>
 
 
-<table class='table table-borderless'> <!-- NEW COMMENT SECTION -->
+<table class='table table-borderless' style='display:none;'> <!-- NEW COMMENT SECTION -->
 			<tr>
 				<td width="60"><img class='avi-thumb'/></td>
 				<td width="100%"><blockquote class='blockquote comment'>@username, <span class='subtext'>@usertype</span><br>
@@ -101,7 +141,7 @@ function reportVideo($code,$head,$info){
 			</tr>
 	</table>
 
-	<table class='table table-borderless'> <!-- COMMENT SECTION -->
+	<table class='table table-borderless' style='display:none;'> <!-- COMMENT SECTION -->
 			<tr>
 				<td width="60"><img class='avi-thumb'/></td>
 				<td width="90%"><blockquote class='blockquote comment'>@username, <span class='subtext'>@usertype</span><br>Finished her are its honoured drawings nor. Pretty see mutual thrown all not edward ten.
@@ -150,9 +190,11 @@ function reportVideo($code,$head,$info){
 		    </div>
 		  </div>
 		  <div class="form-group row">
-		    <label for="inputDesc" class="col-sm-3 col-form-label">Description<br><sub>200 characters max</sub></br></label>
+		    <label for="inputDesc" class="col-sm-3 col-form-label">Description</label>
 		    <div class="col-sm-9">
 		      <textarea class="form-control" id="inputDesc" rows="5" name='inputDesc' required maxlength='200'></textarea>
+
+		      <sub><br>200 characters max</sub>
 		    </div>
   		</div>
       </div>

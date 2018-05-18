@@ -1,8 +1,11 @@
 <script src='script.js'></script>
 <?php
 session_start();
+$db=mysqli_connect("sv59.ifastnet8.org","cubeinfo_admin","dbadmin101","cubeinfo_db");
+if(mysqli_query($db,"SET SESSION SQL_BIG_SELECTS=1")){
+    }else ECHO "FAILED";
+/*$db=mysqli_connect("localhost","root","","db_vlms");*/
 
-$db=mysqli_connect("localhost","root","","db_vlms");
 
 
 
@@ -15,6 +18,12 @@ function checkLogin($user,$pw){
 		return true;
 	}else
 		return false;
+}
+function getSubCount($user){
+    global $db;
+    $query="SELECT COUNT(user_id) as c from tbl_subscribers where user_id=$user";
+    $result=mysqli_fetch_assoc(mysqli_query($db,$query));
+    return $result['c'];
 }
 function deleteCookies(){
 	$str="";
@@ -38,7 +47,7 @@ function registerUser(){
 	if(mysqli_query($db,$query)){
 		header("location: login");
 	}else{
-		echo "FAILED ADDING NEW USER";
+		echo $query;
 		deleteCookies();
 	}
 	
@@ -72,12 +81,13 @@ global $db;
       $query="CALL upload('$code','$title','$filename','$info','$tags',$userid,$category)";
       if(mysqli_query($db,$query)){
         echo "Uploaded Successfully!";
+        $_SESSION['video']="video/".$_FILES['file']['name'];
       }else echo $query;
 
       
       //header("Refresh:1; URL=");
 
-      $_SESSION['video']="video/".$_FILES['file']['name'];
+      
     }
     header('Location: index?v='.$code);
 }
@@ -198,7 +208,7 @@ function getValue($id,$table,$idname,$data){
 }
   function loadvideos(){
      global $db;
-    $query="SELECT *FROM videoinfo";
+    $query="SELECT *FROM videoinfo order by rand()";
     $result= mysqli_query($db,$query);
         echo "<table class='table table-borderless' style='font-size:14px;'>";
         foreach ($result as $row) {
@@ -216,14 +226,14 @@ function getValue($id,$table,$idname,$data){
         echo "</table>";
     
   }
-  function browsevideos(){
+  function browsevideos($key){
      global $db;
-    $query='SELECT DISTINCT category from videoinfo';
+    $query="SELECT DISTINCT category from videoinfo order by rand()";
     $result= mysqli_query($db,$query);
     foreach ($result as $row) {
         $cat=$row['category'];
         echo "<h5 class='category-header'>$cat</h5><div class='row'>";
-        $subresult=mysqli_query($db,"SELECT *from videoinfo where category='$cat'");
+        $subresult=mysqli_query($db,"SELECT *from videoinfo where category='$cat' and title like '%$key%' ");
         foreach ($subresult as $subrow) {
             $link="index?v=".$subrow['code'];
             $filepath=$subrow['filepath'];
@@ -240,6 +250,25 @@ function getValue($id,$table,$idname,$data){
         echo "</div>";
     }
     
+  }
+  function search($key){
+    global $db;
+        $subresult=mysqli_query($db,"SELECT *from videoinfo where title like '%$key%' OR tags like '%$key%' OR category like '%$key%' OR username like '%$key%' ");
+        echo "<h5 class='category-header'>Search result for $key</h5><div class='row'>";
+        foreach ($subresult as $subrow) {
+            $link="index?v=".$subrow['code'];
+            $filepath=$subrow['filepath'];
+            $title=$subrow['title'];
+            $info=$subrow['info'];
+            $info=substr($info, 0, 80);
+            $code=$subrow['code'];
+            $views=$subrow['views'];
+            echo "<div class='col-lg-6 col-sm-6'><div class='row category-panel'><div class='col-lg-6 col-sm-12'><a href='$link' class='thumb'><video width='100%' >";
+            echo "<source src='$filepath' type='video/mp4' ></video></a></div><div class='col-lg-6 col-sm-12'>";
+            echo "<div class='thumb-title browse'>$title</div><br>$info <br>$views views";
+            echo "</div></div></div>";
+        }
+        echo "</div>";
   }
 
 function getRandomVideo(){
@@ -299,25 +328,98 @@ function loadReportedVideos(){
     global $db;
     $query="SELECT *FROM reportedvideos";
     $result= mysqli_query($db,$query);
-        echo "<table class='table' style='font-size:14px;'>";
+        echo "<table class='table table-borderless' style='font-size:14px;'>";
         foreach ($result as $row) {
             $code=$row['code'];
             $link="index?v=".$row['code'];
             $header=$row['header'];
             $info=$row['description'];
-            echo "<tr><td><b>$header</b><br>";
-            echo "$info";
-            echo '<td width="10%"">
-                            <a type="button" class="btn btn-secondary" href="mod?v='.$code.'" value="$filepath" onclick="modplayToSide(this.value)">Play</a>
-                        </td>
-                    </tr>';
+            echo '<tr><td><b><a href="mod?v='.$code.'" onclick="modplayToSide(this.value)" style="font-size:16px;">'.$header.'</a></b><br>';
+            echo "<div style='padding-top:5px;text-align:justify;'>$info</div><br>";
+            echo '<td width="5%"></td></tr>';
         }
         echo "</table>";
 }
+function subscribe($userid,$subid){
+    global $db;
+    $query="CALL sub($userid,$subid)";
+    mysqli_query($db,$query);
 
+}
+function unsubscribe($userid,$subid){
+    global $db;
+    $query="CALL unsub($userid,$subid)";
+    mysqli_query($db,$query);
+
+}
+function checkSub($userid,$subid){
+    global $db;
+    $query="SELECT checkSub($userid,$subid) as res";
+    $result=mysqli_fetch_assoc(mysqli_query($db,$query));
+    return $result['res'];
+}
+function loadSubUsers($subuser){
+    global $db;
+    $query="SELECT *from subusers where subid='$subuser'";
+    $result= mysqli_query($db,$query);
+        echo "<table class='table table-borderless' style='font-size:14px;'>";
+        foreach ($result as $row) {
+            $user=$row['username'];
+            $link="user?u=".$user;
+            $type=$row['usertype'];
+            echo "<tr><td><a href='".$link."'>".$user."</a><span class='subtext'> - ".$type."</span></td></tr>";
+        }
+        echo "</table>";
+}
+function addfav($videoid,$userid){
+    global $db;
+    $query="CALL addfav($videoid,$userid)";
+    mysqli_query($db,$query);
+
+}
+function unfav($videoid,$userid){
+    global $db;
+    $query="CALL unfav($videoid,$userid)";
+    mysqli_query($db,$query);
+
+}
+
+function checkFav($videoid,$userid){
+    global $db;
+    $query="SELECT checkFav($videoid,$userid) as res";
+    $result=mysqli_fetch_assoc(mysqli_query($db,$query));
+    return $result['res'];
+}
+function loadFavList($u){
+    global $db;
+    $query="SELECT *from fav where user_id='$u'";
+    $result= mysqli_query($db,$query);
+        echo "<table class='table table-borderless' style='font-size:14px;'>";
+        foreach ($result as $row) {
+            $filepath=$row['filepath'];
+            $title=$row['title'];
+            $code=$row['code'];
+            echo "<tr>";
+            /*echo "<td>";
+            echo "<video width='100%'>";
+            echo "<source src='$filepath' type='video/mp4' ></video></a>";
+            echo "</td>";*/
+            echo "<td style='font-size:13px;'><a href='user?u=$u&v=$code' value='$filepath' onclick='playToSide(this.value)'>
+            <i class='fa fa-play-circle-o' aria-hidden='true'></i> $title</a></td>";
+        }
+        echo "</table>";
+}
 function loadGallery(){
 	for($x=10 ; $x > 0 ; $x--){
 		echo "<div class='thumb'> </div>";
 	}
 } 
+function closeReport($code){
+    global $db;
+    $query="CALL closeReport('$code')";
+    if(mysqli_query($db,$query)){
+        header("location: mod");
+    }
+    
+}
 ?>

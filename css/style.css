@@ -12,6 +12,26 @@
 	//font-family: Roboto;
 	//color: #1a1a1a !important;
 }
+.avi-thumb{
+	
+}
+.userpanel{
+	padding:10px;
+	background-color: white;
+	border-radius: 1em;
+}
+.pad{
+	padding: 10px;
+	background-color: white;
+}
+.shadowpad{
+	border-left:5px solid #17a2b8;
+}
+.userheader{
+	height: 100px;
+	width: 100%;
+	background-color: #effcff;
+}
 .category-header{
 	padding: 10px 0px 10px 0px;
 }
@@ -89,6 +109,10 @@ color: #c0c0c0;
 	color: #17a2b8;
 	cursor: pointer;
 }
+.subheader{
+	height: 20px;
+	width: 100%;
+}
 .btn-icon:hover{
 	color: #138496;
 }
@@ -98,8 +122,8 @@ color: #c0c0c0;
 .avatar{
 	width: 150px;
 	height: 150px;
-	border-radius: 1em;
-	background-color: #c0c0c0;
+	border-radius: .5em;
+	background-color: #17a2b8;
 }
 .navbar{
 	font-size: 15px;

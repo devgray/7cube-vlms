@@ -56,7 +56,7 @@ if(isset($_COOKIE['newUser'])){
     <br>
 </div>
       <form class='signup needs-validation' onsubmit="registerUser(document.getElementById('inputUsername').value,
-      document.getElementById('inputEmail').value,document.getElementById('inputPassword').value,document.getElementById('fullName').value,document.getElementById('userBio').value,document.getElementById('userType').value)">
+      document.getElementById('inputEmail').value,document.getElementById('inputPassword').value,document.getElementById('fullName').value,document.getElementById('userType').value)">
 
   <div class="form-group row">
     <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
@@ -98,12 +98,12 @@ if(isset($_COOKIE['newUser'])){
     </div>
   </div>
 
-  <div class="form-group row">
+<!--   <div class="form-group row">
     <label for="userBio" class="col-sm-3 col-form-label">Bio</label>
     <div class="col-sm-9">
       <textarea class="form-control" id="userBio" rows="3" name='bio'></textarea>
     </div>
-  </div>
+  </div> -->
 
   <div class="form-group row">
     <label for="userType" class="col-sm-3 col-form-label">I'm a</label>

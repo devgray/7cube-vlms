@@ -12,7 +12,14 @@ if(!isset($_SESSION['loggedin'])){
 if(isset($_COOKIE['delvideo'])){
 	deleteVideo($_COOKIE['delvideo']);
 }
-
+if(isset($_POST['btnsub'])){
+    subscribe($_SESSION['id'],$_SESSION['logid']);
+    header("Location: user?u=".$_GET['u']);
+}
+if(isset($_POST['btnunsub'])){
+    unsubscribe($_SESSION['id'],$_SESSION['logid']);
+    header("Location: user?u=".$_GET['u']);
+}
 ?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -24,43 +31,70 @@ if(isset($_COOKIE['delvideo'])){
   echo "hidden";}else{echo "";} ?>>
 
 <?php include "nav.php"; ?>
-<div class='content'>
+<div class='userheader'></div>
+<div class='content' style='margin-top:-100px;'>
+
 <div class='container'><div class='row'>
 
 	<div class='col-lg-6 col-sm-12'>
 		<br>
+		<div class='userpanel'>
 		<table class='table table-borderless'>
 			<tr><td width="20%">
-				<img class='avatar'/>
+				<img class='avatar' src="img/avi.png" />
 			</td>
-			<td style='padding:20px;'>
+			<td  style='padding:28px 10px 0px 10px;'>
 				<h4><?php {echo $_SESSION['fname'];} ?></h4>
-				<h5><?php {echo $_SESSION['username'];} ?>, <span class='subtext' id='usertype'><?php {echo $_SESSION['usertype'];} ?></span></h5>
-				<p><?php {echo $_SESSION['bio'];} ?></p>
+				<h5><a <?php echo "href='user?u=".$_SESSION['username']."'"; ?>><?php {echo $_SESSION['username'];} ?></a>, <span class='subtext' id='usertype'><?php {echo $_SESSION['usertype'];} ?></span></h5>
+			<!-- 	<p style='height:35px;'><?php {echo $_SESSION['bio'];} ?></p> -->
+
+				<div class="btn-group" role="group" aria-label="Basic example">
+				  <form action="" method="post" style='padding:0;margin:0;'>
+				  <?php 
+				  if($_SESSION['logusername']!=$_GET['u']){
+					  	if(checkSub($_SESSION['id'],$_SESSION['logid'])){
+									echo '<button style="margin-right:7px;" type="submit" class="btn btn-info" name="btnunsub">Subscribed</button>';
+								}else{
+									echo '<button type="submit" class="btn btn-outline-info" name="btnsub">Subscribe</button>';
+								}
+				  }
+				  
+							?>
+				</form>
+				</div>
+				<label style="font-weight:bold;font-size:15px;"><?php echo getSubCount($_SESSION['id']); ?> Subscriber/s</label>
+
+				
 			</td>
 			</tr>
+
 		</table>
+
+
 		<table class='table table-borderless'>
 			<tr>
-				<td style='padding:20px;' align='center'>
 
-<div class="btn-group" role="group" aria-label="Basic example">
+				<td align='left'>
+					
+
+	</td>
+<!-- 				<td style='padding:20px;' align='center' <?php if($_SESSION['logusername']!=$_GET['u']){echo "hidden";}else{echo "";} ?>>
+
+<div class="btn-group" role="group" aria-label="Basic example"  >
   
   <button type="button" class="btn btn-outline-secondary active">Manage Videos</button>
   <button type="button" class="btn btn-outline-secondary">Manage Subscription</button>
   <button type="button" class="btn btn-outline-secondary">Manage Favorites</button>
 </div>
-</td>
+
+</td> -->
 
 			</tr>
-		</table>
 
-		<?php echo manageVideos($_GET['u']); ?>
-
-	</div>
-	<div class='col-lg-6 col-sm-12' align='right'>
-		<div class='featured-video' style='padding-top:20px;'>
-			<table class='table table-borderless' style='border-bottom: 1px solid #c0c0c0;'><!-- VIDEO HEADER -->
+		</table></div>
+<div class='pad'>
+	<div class='featured-video' <?php if(!isset($_GET['v'])){echo "hidden";}else{echo "";} ?> >
+			<table class='table table-borderless'><!-- VIDEO HEADER -->
 		<tr><td>
 			<div class='video'>
 				<video width='100%' controls>
@@ -75,14 +109,31 @@ if(isset($_COOKIE['delvideo'])){
 	</tr>
 	</table>
 		</div>
-
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  
-		  <button type="button" class="btn btn-outline-secondary">Subscribe</button>
-		  <button type="button" class="btn btn-outline-secondary">Browse Videos</button>
-		</div>
-
+		<?php echo manageVideos($_GET['u']); ?>
+</div>
 	</div>
+	
+	<div class='col-lg-3 col-sm-12'>
+		<br>
+		<div class='userpanel'>
+			<div class='pad'>
+			<h4>Liked Videos</h4>
+				<?php loadFavList($_GET['u']); ?>
+			</div>
+			</div>
+	</div>
+
+	<div class='col-lg-3 col-sm-12'>
+		<br>
+		<div class='userpanel'>
+			<div class='pad'>
+			<h4>Subscribed Users</h4>
+				<?php loadSubUsers($_GET['u']); ?>
+			</div>
+			</div>
+	</div>
+
+	
 
 
 </div>
