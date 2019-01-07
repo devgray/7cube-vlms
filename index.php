@@ -45,7 +45,7 @@ function reportVideo($code,$head,$info){
 <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<?php include "head.php"; ?>
+	<?php include "head.php"; ?>	
 	</head>
 
 <body <?php if(!isset($_GET['v'])){

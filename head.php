@@ -1,5 +1,5 @@
 	
-<title>7Cube VLMS</title>
+<title>7Cube</title>
 	<link rel="stylesheet" href="css/font-awesome.min.css">
 <!--	
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -9,6 +9,30 @@
 	-->
 
 <link rel="stylesheet" href="bootstrap-cdn.min.css">
+<style>
+.cyan{
+	color:#00ffcc !important;
+}
+.btn-outline-info{
+color:#00ffcc !important;	
+border-color:#00ffcc !important;
+}	
+.btn-info{
+	color:#1a1a1a;
+	background:#00ffcc !important;
+	border-color:#00ffcc;
+}
+.btn-outline-info:hover{
+color:#1a1a1a !important;	
+border-color:#00ffcc !important;
+background:#00ffcc;
+}	
+.btn-info:hover{
+	color:inherit;	
+	background:#00ffcc !important;
+	border-color:#00ffcc;
+}
+</style>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 

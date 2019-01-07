@@ -49,7 +49,7 @@ if(isset($_POST['btnUpload'])){
    <div class="form-group row">
     <label for="inputTags" class="col-sm-3 col-form-label">Tags</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="inputTags" name='inputTags' placeholder="java programming, photoshop, etc" required maxlength='50'>
+      <input type="text" class="form-control" id="inputTags" name='inputTags' placeholder="travels, tutorials, photoshop, etc" required maxlength='50'>
     </div>
   </div>
 

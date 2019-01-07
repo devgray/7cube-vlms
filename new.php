@@ -24,8 +24,8 @@ if(isset($_COOKIE['newUser'])){
 
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="login"><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand cyan" href="login"><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
   
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">

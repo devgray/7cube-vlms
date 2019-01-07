@@ -33,6 +33,7 @@
 	background-color: #effcff;
 }
 .category-header{
+	color:white;
 	padding: 10px 0px 10px 0px;
 }
 .category-panel{
@@ -79,6 +80,7 @@ color: #c0c0c0;
 
 }
 .content{
+	padding-top:10px;
 	font-size: 13px;
 }
 .avi-thumb{

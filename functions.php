@@ -232,7 +232,7 @@ function getValue($id,$table,$idname,$data){
     $result= mysqli_query($db,$query);
     foreach ($result as $row) {
         $cat=$row['category'];
-        echo "<h5 class='category-header'>$cat</h5><div class='row'>";
+        echo "<h5 class='category-header '>$cat</h5><div class='row'>";
         $subresult=mysqli_query($db,"SELECT *from videoinfo where category='$cat' and title like '%$key%' ");
         foreach ($subresult as $subrow) {
             $link="index?v=".$subrow['code'];
@@ -244,7 +244,7 @@ function getValue($id,$table,$idname,$data){
             $views=$subrow['views'];
             echo "<div class='col-lg-6 col-sm-6'><div class='row category-panel'><div class='col-lg-6 col-sm-12'><a href='$link' class='thumb'><video width='100%' >";
             echo "<source src='$filepath' type='video/mp4' ></video></a></div><div class='col-lg-6 col-sm-12'>";
-            echo "<div class='thumb-title browse'>$title</div><br>$info <br>$views views";
+            echo "<div class='thumb-title browse '>$title</div><br>$info <br>$views views";
             echo "</div></div></div>";
         }
         echo "</div>";

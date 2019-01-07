@@ -41,8 +41,8 @@
 
 <body>
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand cyan" href="#" ><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -56,8 +56,8 @@
     <ul class='navbar-nav'>
       <li class="nav-item">
           <form class="form-inline my-2 my-lg-0" action="" method="POST">
-      <input class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username' name='uname' required>
-      <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password' name='pw' required>
+      <input style='border-radius:0;width:200px;border:none;'class="form-control mr-sm-2" type="search" placeholder="Username" aria-label="Search" style='border-radius:0;width:200px;' id='username' name='uname' required>
+      <input style='border-radius:0;width:200px;border:none;' class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="Search" style='border-radius:0;width:200px;' id='password' name='pw' required>
       <button type="submit" class="btn btn-outline-info" id='btnlogin' name='btnlogin'>Login</button>&nbsp;
       <button type="button" class="btn btn-outline-info" id='btnregister' onclick='clickregister()'>Register</button>
     </form>

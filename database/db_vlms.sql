@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2018 at 05:30 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.0.25
+-- Generation Time: Jan 07, 2019 at 12:00 PM
+-- Server version: 10.1.35-MariaDB
+-- PHP Version: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -160,7 +160,7 @@ CREATE TABLE `tbl_category` (
 --
 
 INSERT INTO `tbl_category` (`id`, `name`) VALUES
-(1, 'Computer Science/Information Technology'),
+(1, 'Travels & Blogs'),
 (2, 'Multimedia Arts'),
 (3, 'Game Development'),
 (4, 'Film and Animation');
@@ -188,6 +188,14 @@ CREATE TABLE `tbl_favorites` (
   `video_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_favorites`
+--
+
+INSERT INTO `tbl_favorites` (`video_id`, `user_id`) VALUES
+(30, 8),
+(31, 8);
 
 -- --------------------------------------------------------
 
@@ -258,6 +266,7 @@ CREATE TABLE `tbl_subscribers` (
 INSERT INTO `tbl_subscribers` (`user_id`, `subscriber_id`) VALUES
 (8, 9),
 (8, 10),
+(9, 8),
 (9, 10),
 (10, 8),
 (10, 9),
@@ -296,8 +305,7 @@ CREATE TABLE `tbl_user` (
 INSERT INTO `tbl_user` (`id`, `username`, `email`, `pass`, `displayname`, `usertype_id`) VALUES
 (8, 'graybriel', 'gray@greifx.com', 0x372e77594738f287317b992b8acca865, 'Gray Aremlap', 1),
 (9, 'mod', 'mod@mod.com', 0x372e77594738f287317b992b8acca865, 'Cube Mod', 3),
-(10, 'shin-aska', 'shin@gmail.com', 0x372e77594738f287317b992b8acca865, 'Richard Orilla', 2),
-(11, 'prim', 'prim@p.com', 0x372e77594738f287317b992b8acca865, 'Primae Quinlog', 1),
+(10, 'alex', 'shin@gmail.com', 0x372e77594738f287317b992b8acca865, 'Alex Vause', 2),
 (12, 'bevs', 'bevramos111@gmail.com', 0xbbcd094b529a558b3f422f2591f8acb1, 'Beverly Ramos', 1);
 
 -- --------------------------------------------------------
@@ -316,8 +324,8 @@ CREATE TABLE `tbl_usertype` (
 --
 
 INSERT INTO `tbl_usertype` (`id`, `type`) VALUES
-(1, 'Student'),
-(2, 'Professor'),
+(1, 'Viewer'),
+(2, 'Content Creator'),
 (3, 'Moderator');
 
 -- --------------------------------------------------------
@@ -344,8 +352,8 @@ CREATE TABLE `tbl_video` (
 --
 
 INSERT INTO `tbl_video` (`id`, `code`, `title`, `filepath`, `info`, `tags`, `uploaddate`, `views`, `user_id`, `category_id`) VALUES
-(30, '5afef0c8bf969', 'Sample Video', 'videos/9-5afef0c8bf969.mp4', 'Sample', 'animation', '2018-05-19', 1, 9, 4),
-(31, '5afef105b570f', 'How to make 3D Text in Photoshop', 'videos/9-5afef105b570f.mp4', 'How to make 3D Text in Photoshop', 'photoshop', '2018-05-19', 3, 9, 2);
+(30, '5afef0c8bf969', 'Sample Video', 'videos/9-5afef0c8bf969.mp4', 'Sample', 'animation', '2018-05-19', 18, 9, 4),
+(31, '5afef105b570f', 'How to make 3D Text in Photoshop', 'videos/9-5afef105b570f.mp4', 'How to make 3D Text in Photoshop', 'photoshop', '2018-05-19', 17, 9, 2);
 
 -- --------------------------------------------------------
 

@@ -3,9 +3,18 @@
 	font-family: Roboto Light;
 	font-size: 13px;
 }
+.btn-outline-info{
+color:#1a1a1a !important;	
+border-color:#1a1a1a !important;
+}	
+.btn-info{
+	background:#1a1a1a !important;
+}
+
 a{
 	text-decoration: none;
 }
+
 a:hover{
 	text-decoration: underline;
 }
