@@ -1,10 +1,10 @@
 <script src='script.js'></script>
 <?php
 session_start();
-$db=mysqli_connect("sv59.ifastnet8.org","cubeinfo_admin","dbadmin101","cubeinfo_db");
-if(mysqli_query($db,"SET SESSION SQL_BIG_SELECTS=1")){
-    }else ECHO "FAILED";
-/*$db=mysqli_connect("localhost","root","","db_vlms");*/
+// $db=mysqli_connect("sv59.ifastnet8.org","cubeinfo_admin","dbadmin101","cubeinfo_db");
+// if(mysqli_query($db,"SET SESSION SQL_BIG_SELECTS=1")){
+//     }else ECHO "FAILED";
+$db=mysqli_connect("localhost","root","","db_vlms");
 
 
 
