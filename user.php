@@ -12,14 +12,14 @@ if(!isset($_SESSION['loggedin'])){
 if(isset($_COOKIE['delvideo'])){
 	deleteVideo($_COOKIE['delvideo']);
 }
-if(isset($_POST['btnsub'])){
-    subscribe($_SESSION['id'],$_SESSION['logid']);
-    header("Location: user?u=".$_GET['u']);
-}
-if(isset($_POST['btnunsub'])){
-    unsubscribe($_SESSION['id'],$_SESSION['logid']);
-    header("Location: user?u=".$_GET['u']);
-}
+// if(isset($_POST['btnsub'])){
+//     subscribe($_SESSION['id'],$_SESSION['logid']);
+//     header("Location: user?u=".$_GET['u']);
+// }
+// if(isset($_POST['btnunsub'])){
+//     unsubscribe($_SESSION['id'],$_SESSION['logid']);
+//     header("Location: user?u=".$_GET['u']);
+// }
 ?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -55,7 +55,10 @@ if(isset($_POST['btnunsub'])){
 					  	if(checkSub($_SESSION['id'],$_SESSION['logid'])){
 									echo '<button style="margin-right:7px;" type="submit" class="btn btn-info" name="btnunsub">Subscribed</button>';
 								}else{
-									echo '<button type="submit" class="btn btn-outline-info" name="btnsub">Subscribe</button>';
+									//<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+									echo '<button type="button" data-toggle="modal" data-target="#subscribeModal" class="btn btn-outline-info">Subscribe</button>';
+									// echo '<INPUT TYPE="hidden" name="amount" value="4.99"><INPUT TYPE="hidden" name="cmd" value="_xclick-subscriptions">';
+									// echo '<INPUT TYPE="hidden" NAME="return" value="https://www.deviantart.com/notgrei"></FORM>';<a target="_new" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UJJ54WFBL6R4Q"
 								}
 				  }
 				  
@@ -169,6 +172,30 @@ if(isset($_POST['btnunsub'])){
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
         <a type="button" class="btn btn-danger" onclick='confirmdeletevideo()' <?php echo "href='user?u=".$_SESSION['logusername']."'"; ?> >Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="subscribeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Subscribe to <?php echo $_GET['u']; ?>?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+        	<div class="col-sm-12">
+		    <label for="userType" class="col-sm-12 col-form-label">You will be redirected to <i>Paypal</i> to process payment. You must have the same <b>registered email</b> to keep your subscription.</label>
+		    </div>
+		  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+        <a type="button" class="btn btn-secondary" onclick='confirmdeletevideo()' target="_new" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FWTWP65Y2YDBL" >Proceed</a>
       </div>
     </div>
   </div>

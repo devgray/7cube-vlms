@@ -34,6 +34,21 @@ if(isset($_POST['btnaddcategory'])){
 <br>
 	<div class='container'><div class='row'>
     <div class='col-sm-3'>
+<!-- 
+      <h4>Subscriptions</h4>
+      <div class="form-group row">
+    <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="subusername" name='subusername' pattern="[A-Za-z0-9]*" title="Only alphanumeric characters" required>
+    </div>
+  </div> 
+
+  <div class="form-group row">
+    <label for="inputUsername" class="col-sm-3 col-form-label">Sub to</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="subusername" name='subusername' pattern="[A-Za-z0-9]*" title="Only alphanumeric characters" required>
+    </div>
+  </div>  -->
 
       <h4>Categories</h4>
       <?php loadcategories() ?>

@@ -1,9 +1,11 @@
 <script src='script.js'></script>
 <?php
 session_start();
-// $db=mysqli_connect("sv59.ifastnet8.org","cubeinfo_admin","dbadmin101","cubeinfo_db");
+// if(!$db=mysqli_connect("sv87.ifastnet.com","bloodapp_admin","!dbadmin101","bloodapp_db")){
+//     echo "NOT CONNECTED";
+// }
 // if(mysqli_query($db,"SET SESSION SQL_BIG_SELECTS=1")){
-//     }else ECHO "FAILED";
+//     }else ECHO "FAILED"; 
 $db=mysqli_connect("localhost","root","","db_vlms");
 
 
@@ -202,6 +204,7 @@ function loadDropdown($table,$header,$hide){
             }
             
         }
+
 }
 function loadSelectedDropdown($table,$header,$selected){
     global $db;
@@ -436,10 +439,16 @@ function loadReportedVideos(){
         }
         echo "</table>";
 }
-function subscribe($userid,$subid){
+function subscriberun($userid,$subid){
     global $db;
     $query="CALL sub($userid,$subid)";
     mysqli_query($db,$query);
+
+}
+function subscribe($userid,$subid){
+    global $db;
+    $query="CALL sub($userid,$subid)";
+    //mysqli_query($db,$query);
 
 }
 function unsubscribe($userid,$subid){
