@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link " href="browse">Browse <span class="sr-only">(current)</span></a>
+        <a class="nav-link " href="browse">Browse<span class="sr-only">(current)</span></a>
       </li>
       <form class="form-inline my-2 my-lg-0" action="browse" method="get">
       <input class="form-control mr-sm-2" name='s' type="search" placeholder="Search" aria-label="Search" style='border-radius:0;width:350px;border:none;'>
@@ -23,6 +23,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" <?php echo "href='user?u=".$_SESSION['logusername']."'"; ?> >View Profile</a>
+    <a class="dropdown-item" <?php echo "href='edit?u=".$_SESSION['logusername']."'"; ?> >Edit Account</a>
     <a class="dropdown-item" href='mod' style='cursor:pointer;' <?php if(!isset($_SESSION['modid'])){
   echo "hidden";}else{echo "";} ?> >Moderator Account</a>
     <a class="dropdown-item" href="logout" >Logout</a>

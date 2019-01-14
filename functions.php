@@ -41,17 +41,74 @@ function deleteCookies(){
 		setcookie($parts[0],'',1);	
 	}
 }
-function registerUser(){
+function changepw($user,$pw){
+    global $db;
+    $query="CALL changepw('$user','$pw')";
+    if(mysqli_query($db,$query)){
+        
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+         Password changed successfully!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+        //header("location: user?edit=$user");
+    }else{
+        echo $query;
+    }
+    
+}
+function registerUser($user,$email,$pw,$fname,$utype){
 	global $db;
-	$query=$_COOKIE['newUser'];
+	//$query=$_COOKIE['newUser'];
+    $query="CALL registerUser('$user','$email','$pw','$fname',$utype)";
 	if(mysqli_query($db,$query)){
-		header("location: login");
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
+          Account Created!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+		header("Refresh:2; URL=login");
 	}else{
-		echo $query;
-		deleteCookies();
+        echo $query;
+		echo '<div class="alert alert-warning alert-dismissible fade show" role="alert" align="center">
+          Email is already being used by another account!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+        //deleteCookies();
 	}
 	
-}/*
+}
+function editUser($user,$email,$fname,$utype){
+    global $db;
+    $query="CALL editUser('$user','$email','$fname',$utype)";
+    if(mysqli_query($db,$query)){
+        header("location: user?u=$user");
+    }else{
+        echo '<div class="alert alert-warning alert-dismissible fade show" role="alert" align="center">
+          The email <b>'.$email.'</b> is already being used by another account!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>';
+    }
+    
+}
+/*function editUser(){
+    global $db;
+    $query=$_COOKIE['editUser'];
+    if(mysqli_query($db,$query)){
+        header("location: browse");
+    }else{
+        echo $query;
+        deleteCookies();
+    }
+    
+}*/
+/*
 function getUserInfo($username){
 	global $db;
 	$query="SELECT *FROM userinfo where username=$username";
@@ -163,6 +220,25 @@ function loadSelectedDropdown($table,$header,$selected){
             
         }
 }
+function loadSelectedDropdownHide($table,$header,$selected,$hide){
+    global $db;
+    $query="SELECT * from $table";
+
+    $result= mysqli_query($db,$query);
+        foreach ($result as $row) {
+            $id=$row['id'];
+            $x = $row[$header];
+            if($x!=""){
+                if($x==$selected){
+                echo  "<option value='$id' selected>$x</option>" ;
+                }else if($hide!=$id){
+                echo  "<option value='$id'>$x</option>" ;
+                }
+            }
+            
+        }
+}
+
 
 function getLoginInfo($username){
     global $db;
@@ -208,7 +284,7 @@ function getValue($id,$table,$idname,$data){
 }
   function loadvideos(){
      global $db;
-    $query="SELECT *FROM videoinfo order by rand()";
+    $query="SELECT *FROM videoinfo order by rand() limit 5";
     $result= mysqli_query($db,$query);
         echo "<table class='table table-borderless' style='font-size:14px;'>";
         foreach ($result as $row) {
@@ -225,6 +301,26 @@ function getValue($id,$table,$idname,$data){
         }
         echo "</table>";
     
+  }
+    function loadcategories(){
+     global $db;
+    $query="SELECT name from tbl_category order by name ASC";
+    $result= mysqli_query($db,$query);
+        echo "<table class='table table-sm' style='font-size:14px;'>";
+        foreach ($result as $row) {
+            $c=$row['name'];
+            echo "<tr'><td>";
+            echo $c;
+            echo "</td></tr>";
+            
+        }
+        echo "</table>";
+    
+  }
+  function addcategory($cat){
+    global $db;
+    $query="INSERT INTO tbl_category values(null, '$cat')";
+    $result= mysqli_query($db,$query);
   }
   function browsevideos($key){
      global $db;
@@ -328,7 +424,7 @@ function loadReportedVideos(){
     global $db;
     $query="SELECT *FROM reportedvideos";
     $result= mysqli_query($db,$query);
-        echo "<table class='table table-borderless' style='font-size:14px;'>";
+        echo "<table class='table table-sm' style='font-size:14px;'>";
         foreach ($result as $row) {
             $code=$row['code'];
             $link="index?v=".$row['code'];

@@ -17,6 +17,7 @@ if(!isset($_SESSION['loggedin'])){
 <?php include "nav.php"; ?>
 <div class='content'>
 
+
 <div class='container'>
 <br>
 <?php if(isset($_GET['s'])){
@@ -31,5 +32,7 @@ if(!isset($_SESSION['loggedin'])){
 </div> <!-- end div content -->
 </body>
 <?php include "footer.php"; ?>
+
+<!-- MODALS -->
 
 </html>

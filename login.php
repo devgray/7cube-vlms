@@ -21,7 +21,7 @@
         }
   }
 
-  if(isset($_COOKIE['newUser'])){
+/*  if(isset($_COOKIE['newUser'])){
     echo '<div class="alert alert-success alert-dismissible fade show" role="alert" align="center">
           Account created.
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -29,7 +29,7 @@
           </button>
         </div>';
         deleteCookies();     
-  }
+  }*/
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
 
 	</head>
 
-<body>
+<body style="margin-bottom: 50px;">
 
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand cyan" href="#" ><i class="fa fa-cube fa-lg" aria-hidden="true"></i></a>

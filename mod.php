@@ -16,6 +16,9 @@ if(isset($_COOKIE['delvideo'])){
 if(isset($_POST['btnclosereport'])){
   closeReport($_GET['v']);
 }
+if(isset($_POST['btnaddcategory'])){
+  addcategory($_POST['inputcategory']);
+}
 ?>
  <!DOCTYPE html>
 <html lang='en' xmlns="http://www.w3.org/1999/xhtml">
@@ -28,146 +31,65 @@ if(isset($_POST['btnclosereport'])){
 
 <?php include "nav.php"; ?>
 <div class='content'>
-
+<br>
 	<div class='container'><div class='row'>
-		<div class='col-sm-12'><br>
-			<div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <h6>Manage Reported Videos</h6>
-        </button>
-      </h5>
+    <div class='col-sm-3'>
+
+      <h4>Categories</h4>
+      <?php loadcategories() ?>
+
+<button type="button" class="btn btn-outline-secondary" data-toggle='modal' data-target='#addcategoryModal'>Add Category</button>
+
+    </div>
+		<div class='col-sm-9'>
+
+
+
+<h4>Reported Videos</h4>
+
+        <div class='row'>
+          <div class='col-sm-6'>
+            <div class='scroll' style="height:500px;overflow:auto;"><?php loadReportedVideos(); ?></div>
     </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-      	<div class='row'>
-      		<div class='col-sm-6'>
-        		<div class='scroll' style="height:500px;overflow:auto;"><?php loadReportedVideos(); ?></div>
-		</div>
-
-			<div class='col-sm-6'>
-				<video width='100%' style='padding-bottom:10px;' controls>
+      <div class='col-sm-6'>
+        <video width='100%' style='padding-bottom:10px;' controls>
                 <source id='repvideo' <?php if(isset($_GET['v'])){ echo "src='".getFilePath($_GET['v'])."'"; }?> type='video/mp4' >
                 </video>
                 <table class='table table-borderless'>
-                	<tr>
-                		<td width='30%'>Video Title</td>
-                		<td><a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?>><?php echo $_SESSION['vidtitle']; ?></a></td>
-                	</tr>
-                	<tr>
-                		<td>Uploader</td>
-                		<td><a <?php if(isset($_GET['v'])){ echo "href='user?u=".$_SESSION['vidusername']."'"; }?>><?php echo $_SESSION['vidusername']; ?></a></td>
-                	</tr>
-                	<tr>
-                		<td>Description</td>
-                		<td><?php echo $_SESSION['vidinfo']; ?></td>
-                	</tr>
-                	<tr>
-                		<td>Category</td>
-                		<td><?php echo $_SESSION['vidcategory']; ?></td>
-                	</tr>
+                  <tr>
+                    <td width='30%'>Video Title</td>
+                    <td><a <?php if(isset($_GET['v'])){ echo "href='index?v=".$_GET['v']."'"; }?>><?php echo $_SESSION['vidtitle']; ?></a></td>
+                  </tr>
+                  <tr>
+                    <td>Uploader</td>
+                    <td><a <?php if(isset($_GET['v'])){ echo "href='user?u=".$_SESSION['vidusername']."'"; }?>><?php echo $_SESSION['vidusername']; ?></a></td>
+                  </tr>
+                  <tr>
+                    <td>Description</td>
+                    <td><?php echo $_SESSION['vidinfo']; ?></td>
+                  </tr>
+                  <tr>
+                    <td>Category</td>
+                    <td><?php echo $_SESSION['vidcategory']; ?></td>
+                  </tr>
 
 
                 </table>
                 <div align='right'>
                 <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;' <?php if(!isset($_GET['v'])){echo "hidden";}else{echo "";} ?> >
-		  
-				  <button type="button" class="btn btn-outline-secondary" class='btn btn-outline-secondary'
+      
+          <button type="button" class="btn btn-outline-secondary" class='btn btn-outline-secondary'
           data-toggle='modal' data-target='#closereportmodal'>Close Report</button>
           <button type='button' <?php echo "value='".$_SESSION['vidfilepath']."'"; ?> onclick='delvideo(this.value)' class='btn btn-outline-secondary'
           data-toggle='modal' data-target='#deleteVideoModal'>Remove Video</button>
 
-				</div>
-				</div>
-			</div>
-
-	</div>
-
         </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <h6>Manage Reported Comments</h6>
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        
-          <table class='table'>
-              <tr>
-                  <th width='40%'>
-                      Comment
-                  </th>
-                <th width='15%'>
-                    Posted by
-                </th>
-                <th width='15%'>
-                    Reported by
-                </th>
-                <th width='10%'>
-                    Video ID
-                </th>
-                <th width='20%'>
-                    Action
-                </th>
-              </tr>
-
-              <tr>
-                <td>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-                </td>
-                <td>
-                  @username
-                </td>
-                <td>
-                  @username
-                </td>
-                <td>
-                  asdefasdadfas
-                </td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;'>
-                  <button type="button" class="btn btn-outline-secondary">Delete Comment</button>
-                  <button type="button" class="btn btn-outline-secondary">Close Report</button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.
-                </td>
-                <td>
-                  @username
-                </td>
-                <td>
-                  @username
-                </td>
-                <td>
-                  asdefasdadfas
-                </td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Basic example" style='padding-bottom:10px;'>
-                  <button type="button" class="btn btn-outline-secondary">Delete Comment</button>
-                  <button type="button" class="btn btn-outline-secondary">Close Report</button>
-                  </div>
-                </td>
-              </tr>
-
-          </table>
-
         </div>
-    </div>
+      </div>
+
   </div>
 
-</div>
 
 		</div>
 	</div></div>
@@ -224,6 +146,39 @@ if(isset($_POST['btnclosereport'])){
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="addcategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form class='signup needs-validation' method="POST">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add a Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <div class="col-sm-12">
+
+        <div class="form-group row">
+    <label for="inputUsername" class="col-sm-3 col-form-label">Category</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name='inputcategory' pattern="[A-Za-z]+" required>
+    </div>
+  </div>
+
+        </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-danger" name="btnaddcategory">Submit</a>
+      </div>
+    </div>
+  </div>
+</form>
 </div>
 
 </html>

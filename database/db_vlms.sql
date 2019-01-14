@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2019 at 12:00 PM
--- Server version: 10.1.35-MariaDB
--- PHP Version: 7.2.9
+-- Generation Time: Jan 14, 2019 at 06:15 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,6 +30,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `addfav` (IN `video_id` INT, IN `use
 	INSERT into tbl_favorites values(video_id,user_id);
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `changepw` (IN `user` TEXT, IN `pw` TEXT)  BEGIN
+UPDATE tbl_user set pass=AES_ENCRYPT('text',UNHEX(SHA2(pw,512))) where username=user;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `closeReport` (IN `cd` TEXT)  BEGIN
 	DECLARE vidid INT;
     SELECT id from tbl_video where `code`=cd into vidid;
@@ -43,6 +47,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteVideo` (IN `path` TEXT)  BEGI
     DELETE FROM tbl_reportedvideos where video_id=delId;
     DELETE FROM tbl_comments where video_id=delId;
     DELETE FROM tbl_video where id=delId;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `editUser` (IN `user` TEXT, IN `inemail` TEXT, IN `fname` TEXT, IN `utype` INT)  BEGIN
+	UPDATE tbl_user set email=inemail, displayname=fname, usertype_id=utype where username=user;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registerUser` (IN `user` TEXT, IN `email` TEXT, IN `pw` TEXT, IN `fname` TEXT, IN `utype` INT)  BEGIN
@@ -160,10 +168,11 @@ CREATE TABLE `tbl_category` (
 --
 
 INSERT INTO `tbl_category` (`id`, `name`) VALUES
-(1, 'Travels & Blogs'),
-(2, 'Multimedia Arts'),
+(4, 'Film and Animation'),
 (3, 'Game Development'),
-(4, 'Film and Animation');
+(2, 'Multimedia Arts'),
+(5, 'Music'),
+(1, 'Travels & Blogs');
 
 -- --------------------------------------------------------
 
@@ -195,7 +204,13 @@ CREATE TABLE `tbl_favorites` (
 
 INSERT INTO `tbl_favorites` (`video_id`, `user_id`) VALUES
 (30, 8),
-(31, 8);
+(31, 8),
+(32, 10),
+(37, 9),
+(39, 9),
+(41, 9),
+(41, 33),
+(42, 9);
 
 -- --------------------------------------------------------
 
@@ -248,6 +263,13 @@ CREATE TABLE `tbl_reportedvideos` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_reportedvideos`
+--
+
+INSERT INTO `tbl_reportedvideos` (`video_id`, `reportedby_id`, `header`, `description`) VALUES
+(30, 10, 'Inappropriate Content', 'graba taxi');
+
 -- --------------------------------------------------------
 
 --
@@ -268,8 +290,10 @@ INSERT INTO `tbl_subscribers` (`user_id`, `subscriber_id`) VALUES
 (8, 10),
 (9, 8),
 (9, 10),
+(9, 33),
 (10, 8),
 (10, 9),
+(10, 33),
 (11, 9);
 
 -- --------------------------------------------------------
@@ -292,7 +316,7 @@ CREATE TABLE `tbl_tags` (
 CREATE TABLE `tbl_user` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `email` text NOT NULL,
+  `email` varchar(50) NOT NULL,
   `pass` blob NOT NULL,
   `displayname` varchar(50) NOT NULL,
   `usertype_id` int(11) NOT NULL
@@ -304,9 +328,12 @@ CREATE TABLE `tbl_user` (
 
 INSERT INTO `tbl_user` (`id`, `username`, `email`, `pass`, `displayname`, `usertype_id`) VALUES
 (8, 'graybriel', 'gray@greifx.com', 0x372e77594738f287317b992b8acca865, 'Gray Aremlap', 1),
-(9, 'mod', 'mod@mod.com', 0x372e77594738f287317b992b8acca865, 'Cube Mod', 3),
-(10, 'alex', 'shin@gmail.com', 0x372e77594738f287317b992b8acca865, 'Alex Vause', 2),
-(12, 'bevs', 'bevramos111@gmail.com', 0xbbcd094b529a558b3f422f2591f8acb1, 'Beverly Ramos', 1);
+(9, 'mod', 'mod@mod.com', 0x372e77594738f287317b992b8acca865, 'Cube Mods', 3),
+(10, 'alex', 'alex@gmail.com', 0x372e77594738f287317b992b8acca865, 'Alex no food', 2),
+(12, 'bevs', 'bevramos111@gmail.com', 0xbbcd094b529a558b3f422f2591f8acb1, 'Beverly Ramos', 1),
+(14, '7cubemod', '7cube@mod.com', 0x372e77594738f287317b992b8acca865, '7Cube Admin', 3),
+(15, 'kento', 'kento@gmail.com', 0x372e77594738f287317b992b8acca865, 'Kento', 2),
+(33, 'lawliet', 'lawliet@gmail.com', 0x372e77594738f287317b992b8acca865, 'L Lawliet', 1);
 
 -- --------------------------------------------------------
 
@@ -352,8 +379,15 @@ CREATE TABLE `tbl_video` (
 --
 
 INSERT INTO `tbl_video` (`id`, `code`, `title`, `filepath`, `info`, `tags`, `uploaddate`, `views`, `user_id`, `category_id`) VALUES
-(30, '5afef0c8bf969', 'Sample Video', 'videos/9-5afef0c8bf969.mp4', 'Sample', 'animation', '2018-05-19', 18, 9, 4),
-(31, '5afef105b570f', 'How to make 3D Text in Photoshop', 'videos/9-5afef105b570f.mp4', 'How to make 3D Text in Photoshop', 'photoshop', '2018-05-19', 17, 9, 2);
+(30, '5afef0c8bf969', 'Sample Video', 'videos/9-5afef0c8bf969.mp4', 'Sample', 'animation', '2018-05-19', 72, 9, 4),
+(31, '5afef105b570f', 'How to make 3D Text in Photoshop', 'videos/9-5afef105b570f.mp4', 'How to make 3D Text in Photoshop', 'photoshop', '2018-05-19', 24, 9, 2),
+(32, '5c3b5cf250ddd', 'Nuance', 'videos/9-5c3b5cf250ddd.mp4', 'an animation project', 'animation', '2019-01-14', 12, 9, 4),
+(36, '5c3b60d380039', 'Fransis Derelle - Fly', 'videos/9-5c3b60d380039.mp4', 'NCS Release', 'edm', '2019-01-14', 4, 9, 5),
+(37, '5c3b63b23a4ae', 'Honeymoon Drone', 'videos/10-5c3b63b23a4ae.mp4', '400 Days around the World', 'travels', '2019-01-14', 45, 10, 1),
+(39, '5c3b64ad79b22', 'To my girlfriend', 'videos/10-5c3b64ad79b22.mp4', 'No copyright infringement intended. For project purposes only.', 'people blogs', '2019-01-14', 4, 10, 5),
+(40, '5c3b64e1aa5ee', 'Photoshop - Watercolor Painting Effect', 'videos/10-5c3b64e1aa5ee.mp4', 'No copyright infringement intended. For project purposes only.', 'photoshop tutorials', '2019-01-14', 5, 10, 2),
+(41, '5c3b656045460', 'NaruHina - Used to be', 'videos/10-5c3b656045460.mp4', 'No copyright infringement intended. For project purposes only.', 'naruhina', '2019-01-14', 12, 10, 4),
+(42, '5c3b65b702be2', 'Niichan - Save You', 'videos/10-5c3b65b702be2.mp4', 'No copyright infringement intended. For project purposes only.', 'animation', '2019-01-14', 9, 10, 4);
 
 -- --------------------------------------------------------
 
@@ -386,7 +420,7 @@ CREATE TABLE `tbl_watchlater` (
 CREATE TABLE `userinfo` (
 `id` int(11)
 ,`username` varchar(20)
-,`email` text
+,`email` varchar(50)
 ,`fname` varchar(50)
 ,`usertype` varchar(20)
 );
@@ -465,7 +499,8 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `tbl_comments`
@@ -532,6 +567,7 @@ ALTER TABLE `tbl_tags`
 ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `usertype_id` (`usertype_id`),
   ADD KEY `id` (`id`);
 
@@ -571,7 +607,7 @@ ALTER TABLE `tbl_watchlater`
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_comments`
@@ -601,7 +637,7 @@ ALTER TABLE `tbl_tags`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tbl_usertype`
@@ -613,7 +649,7 @@ ALTER TABLE `tbl_usertype`
 -- AUTO_INCREMENT for table `tbl_video`
 --
 ALTER TABLE `tbl_video`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Constraints for dumped tables

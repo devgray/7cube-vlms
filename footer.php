@@ -3,7 +3,7 @@
 		<div class='col-sm-4'>
 		</div>
 		<div class='col-sm-4' style='text-align:center;color:white;'>
-			7Cube Studios<br>
+			7Cube Studios 
 			&copy; 2019
 		</div>
 	</div>

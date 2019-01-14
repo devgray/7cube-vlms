@@ -6,7 +6,14 @@
     font-family: 'Roboto Regular';
     src: url(fonts/Roboto-Regular.ttf);
 }
-
+html {
+	position: relative;
+	min-height: 100%;
+  }
+  body {
+	/* Margin bottom by footer height */
+	margin-bottom: 80px;
+  }
 *{
 	//margin:0 auto;
 	//font-family: Roboto;
@@ -33,7 +40,6 @@
 	background-color: #effcff;
 }
 .category-header{
-	color:white;
 	padding: 10px 0px 10px 0px;
 }
 .category-panel{
@@ -162,7 +168,8 @@ color: #c0c0c0;
 	background-color: #a8ce65;
 }
 .footer{
-
+	position:absolute;
+bottom:0;
 }
 nav li{
 	margin-right: 20px;

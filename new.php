@@ -12,8 +12,11 @@ if(){
   $query="CALL registerUser($user,$pw,$cpw,$name,$bio,$type)";
   mysqli_query($db, $query);
 }*/
-if(isset($_COOKIE['newUser'])){
+/*if(isset($_COOKIE['newUser'])){
   registerUser();
+  }*/
+  if(isset($_POST['btnsubmit'])){
+    registerUser($_POST['username'],$_POST['email'],$_POST['password'],$_POST['fullname'],$_POST['usertype']);
   }
 ?>
 <!DOCTYPE html>
@@ -54,14 +57,14 @@ if(isset($_COOKIE['newUser'])){
 <div align='center'><br>
     <i class="fa fa-cube fa-5x" aria-hidden="true"></i><h3>Sign Up!</h3>
     <br>
-</div>
-      <form class='signup needs-validation' onsubmit="registerUser(document.getElementById('inputUsername').value,
-      document.getElementById('inputEmail').value,document.getElementById('inputPassword').value,document.getElementById('fullName').value,document.getElementById('userType').value)">
+</div><!--  onsubmit="registerUser(document.getElementById('inputUsername').value,document.getElementById('inputEmail').value,document.getElementById('inputPassword').value,
+      document.getElementById('fullName').value,document.getElementById('userType').value)" -->
+      <form class='signup needs-validation' method="POST">
 
   <div class="form-group row">
     <label for="inputUsername" class="col-sm-3 col-form-label">Username</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="inputUsername" name='username' required>
+      <input type="text" class="form-control" id="inputUsername" name='username' pattern="[A-Za-z0-9]*" title="Only alphanumeric characters" required>
     </div>
   </div>
 
